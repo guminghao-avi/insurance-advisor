@@ -1,0 +1,128 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "last_updated": "2026-05-28",
+    "source": "公开产品信息整理",
+    "disclaimer": "香港保险产品信息仅供参考。购买香港保险必须亲赴香港签单，适用香港法律。保费以美元/港币计价，存在汇率风险。分红不保证，实际以保险公司公告为准。",
+    "important_notes": [
+      "必须亲赴香港签单，内地签署属地下保单不受保护",
+      "适用香港法律，纠纷需在香港解决",
+      "健康告知采用最高诚信原则（无限告知）",
+      "保单以港币或美元计价，有汇率风险",
+      "理赔无需赴港，快递材料即可",
+      "疾病定义与内地有差异"
+    ]
+  },
+  "products": [
+    {
+      "id": "hk-prudential-chengbao",
+      "name": "诚保一生",
+      "company": "保诚",
+      "category": "香港重疾险",
+      "age_range": "0-65岁",
+      "coverage_period": "终身",
+      "premium_reference": "35岁男/15万美元/25年缴约4800美元/年",
+      "key_features": [
+        "覆盖127种病况，总保障最高1100%保额",
+        "市场独有脑退化症/柏金逊病终身年金",
+        "怀孕20周可为胎儿投保",
+        "赔付成功率96.4%"
+      ],
+      "limitations": ["需赴港签单", "美元计价有汇率风险"],
+      "suitable_for": ["有香港保险需求", "看重多重赔付"],
+      "rating": 4.6,
+      "tags": ["香港", "重疾", "多重赔付"]
+    },
+    {
+      "id": "hk-aia-aibanhang-2",
+      "name": "爱伴航2",
+      "company": "友邦",
+      "category": "香港重疾险",
+      "age_range": "0-65岁",
+      "coverage_period": "终身",
+      "premium_reference": "35岁男/15万美元/25年缴约4403美元/年",
+      "key_features": [
+        "覆盖115种疾病，最高赔偿1100%保额",
+        "持续癌症现金津贴长达100个月（市场最长）",
+        "支持孕22周胎儿投保"
+      ],
+      "limitations": ["需赴港签单", "美元计价有汇率风险"],
+      "suitable_for": ["看重癌症长期津贴"],
+      "rating": 4.5,
+      "tags": ["香港", "重疾", "癌症津贴"]
+    },
+    {
+      "id": "hk-manulife-huoyaorensheng",
+      "name": "活耀人生PRO",
+      "company": "宏利",
+      "category": "香港重疾险",
+      "age_range": "0-65岁",
+      "coverage_period": "终身",
+      "premium_reference": "35岁男/15万美元/25年缴约6008美元/年",
+      "key_features": [
+        "唯一承诺保证保费不变的主流产品",
+        "早期疾病保障全面",
+        "提供保费返还可选权益"
+      ],
+      "limitations": ["需赴港签单", "保费相对较高"],
+      "suitable_for": ["看重保费保证不变"],
+      "rating": 4.4,
+      "tags": ["香港", "重疾", "保证保费"]
+    },
+    {
+      "id": "hk-manulife-furao",
+      "name": "富饶千秋储蓄计划",
+      "company": "万通",
+      "category": "香港储蓄险",
+      "age_range": "0-75岁",
+      "coverage_period": "终身",
+      "premium_reference": "中长期预期回报可突破6-7%",
+      "key_features": [
+        "全港独有12种终身年金权益转换",
+        "10种货币可选（含首创瑞士法郎）",
+        "支持无限次更改受保人及保单分拆",
+        "快至13年保证回本"
+      ],
+      "limitations": ["需赴港签单", "分红不保证"],
+      "suitable_for": ["长期储蓄/教育金/养老金规划"],
+      "rating": 4.7,
+      "tags": ["香港", "储蓄", "年金转换"]
+    },
+    {
+      "id": "hk-aia-huanyuyinghuo",
+      "name": "环宇盈活储蓄计划",
+      "company": "友邦",
+      "category": "香港储蓄险",
+      "age_range": "0-75岁",
+      "coverage_period": "终身",
+      "premium_reference": "第30年预期IRR达6.5%",
+      "key_features": [
+        "中短期预期收益全面高于前代产品",
+        "多货币保单、货币转换、红利锁定",
+        "保单分拆功能齐全"
+      ],
+      "limitations": ["需赴港签单", "分红不保证"],
+      "suitable_for": ["追求高预期收益", "多币种配置"],
+      "rating": 4.6,
+      "tags": ["香港", "储蓄", "高收益"]
+    },
+    {
+      "id": "hk-prudential-junfu",
+      "name": "隽富",
+      "company": "保诚",
+      "category": "香港储蓄险",
+      "age_range": "0-75岁",
+      "coverage_period": "终身",
+      "premium_reference": "分红实现率围绕演示值波动",
+      "key_features": [
+        "多货币选择",
+        "支持部分提取及保费假期",
+        "保诚分红理念为利润90%分给客户"
+      ],
+      "limitations": ["需赴港签单", "分红不保证"],
+      "suitable_for": ["看重保诚品牌和分红理念"],
+      "rating": 4.4,
+      "tags": ["香港", "储蓄", "多货币"]
+    }
+  ]
+}

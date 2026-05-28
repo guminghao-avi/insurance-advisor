@@ -1,0 +1,124 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "last_updated": "2026-05-28",
+    "source": "公开产品信息整理",
+    "disclaimer": "理财险收益为估算值，实际以保单条款和结算利率为准。分红型产品的分红不保证。"
+  },
+  "products": [
+    {
+      "id": "taibao-manhaode",
+      "name": "蛮好的人生2025",
+      "company": "太保人寿",
+      "category": "快返年金",
+      "type": "传统型",
+      "age_range": "0-80岁",
+      "coverage_period": "终身",
+      "premium_reference": "年交5千起",
+      "key_features": [
+        "第5年起领祝贺金，第6年起活多久领多久",
+        "无健康告知，最高80岁可投",
+        "满期返还已交保费",
+        "可对接太保家园养老社区"
+      ],
+      "limitations": [],
+      "suitable_for": ["养老规划", "追求稳定现金流"],
+      "rating": 4.5,
+      "tags": ["年金", "养老", "快返"]
+    },
+    {
+      "id": "zhongyou-yiaiyisheng-2",
+      "name": "邮爱一生2.0",
+      "company": "中邮人寿",
+      "category": "快返年金",
+      "type": "传统型",
+      "age_range": "0-65岁",
+      "coverage_period": "终身",
+      "premium_reference": "年交5千起，缴费期最长10年",
+      "key_features": [
+        "央企中国邮政背景",
+        "提供投保人意外身故豁免",
+        "前期领取金额较高"
+      ],
+      "limitations": [],
+      "suitable_for": ["偏好央企品牌", "养老储蓄"],
+      "rating": 4.3,
+      "tags": ["年金", "央企", "快返"]
+    },
+    {
+      "id": "fuxing-xinghaiyingjia",
+      "name": "星海赢家火凤版",
+      "company": "复星保德信",
+      "category": "养老年金",
+      "type": "分红型",
+      "age_range": "0-65岁",
+      "coverage_period": "终身",
+      "premium_reference": "30岁男年交30万交5年，60岁起每年可领11.29万",
+      "key_features": [
+        "领取额度市场第一梯队",
+        "有祝寿金和满期金",
+        "对接复星养老社区"
+      ],
+      "limitations": ["分红不保证"],
+      "suitable_for": ["高额养老规划"],
+      "rating": 4.5,
+      "tags": ["年金", "养老", "高领取"]
+    },
+    {
+      "id": "fude-dafuweng-6",
+      "name": "大富翁6.0",
+      "company": "富德生命人寿",
+      "category": "养老年金",
+      "type": "传统型",
+      "age_range": "0-60岁",
+      "coverage_period": "终身",
+      "premium_reference": "确定写入合同",
+      "key_features": [
+        "两个计划可选：保证领取25年或无保证但年领更高",
+        "80岁或保单第23年给付祝寿金"
+      ],
+      "limitations": [],
+      "suitable_for": ["追求确定领取", "长寿风险保障"],
+      "rating": 4.4,
+      "tags": ["年金", "养老", "确定领取"]
+    },
+    {
+      "id": "taibao-fuyouyu-2025",
+      "name": "福有余2025",
+      "company": "太保人寿",
+      "category": "增额终身寿",
+      "type": "传统型",
+      "age_range": "0-70岁",
+      "coverage_period": "终身",
+      "premium_reference": "长期IRR接近2.5%上限",
+      "key_features": [
+        "大品牌",
+        "回本快（趸交第5年超已交保费）",
+        "可对接太保家园养老社区"
+      ],
+      "limitations": [],
+      "suitable_for": ["长期储蓄", "偏好大品牌"],
+      "rating": 4.4,
+      "tags": ["增额寿", "固收", "大品牌"]
+    },
+    {
+      "id": "guangda-guangmingzhizun-2024",
+      "name": "光明至尊2024",
+      "company": "光大永明",
+      "category": "增额终身寿",
+      "type": "分红型",
+      "age_range": "0-70岁",
+      "coverage_period": "终身",
+      "premium_reference": "保底IRR约1.0%-1.8%，加分红后期IRR可达3.5%以上",
+      "key_features": [
+        "央企背景",
+        "保底+分红，预期收益可突破3.0%",
+        "分红实现率平均值超60%"
+      ],
+      "limitations": ["分红不保证"],
+      "suitable_for": ["接受分红浮动", "追求较高预期收益"],
+      "rating": 4.4,
+      "tags": ["增额寿", "分红型", "央企"]
+    }
+  ]
+}

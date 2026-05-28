@@ -1,0 +1,136 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "last_updated": "2026-05-28",
+    "source": "公开产品信息整理",
+    "disclaimer": "产品信息仅供参考，实际条款以保险公司官方为准。"
+  },
+  "products": [
+    {
+      "id": "xiaomifeng-5",
+      "name": "小蜜蜂5号（至尊版）",
+      "company": "太平洋财险",
+      "category": "成人意外险",
+      "age_range": "18-60岁",
+      "coverage_amount": "150万身故/15万医疗",
+      "premium_reference": "356元/年",
+      "key_features": [
+        "意外医疗不限社保0免赔",
+        "节假日交通意外翻倍赔",
+        "含猝死保障"
+      ],
+      "limitations": [],
+      "suitable_for": ["成人综合意外保障"],
+      "rating": 4.7,
+      "tags": ["成人", "综合意外", "不限社保", "猝死"]
+    },
+    {
+      "id": "dahujia-7-qiijian",
+      "name": "大护甲7号旗舰版",
+      "company": "人保财险",
+      "category": "成人意外险",
+      "age_range": "18-55岁",
+      "coverage_amount": "50-150万",
+      "premium_reference": "118元起",
+      "key_features": [
+        "央企品牌理赔稳",
+        "可报销私立医院普通部",
+        "含高风险运动保障"
+      ],
+      "limitations": [],
+      "suitable_for": ["偏好大品牌", "需要私立医院报销"],
+      "rating": 4.6,
+      "tags": ["成人", "大品牌", "私立医院"]
+    },
+    {
+      "id": "dahujia-6-quanmin",
+      "name": "大护甲6号全民版",
+      "company": "人保财险",
+      "category": "成人意外险",
+      "age_range": "18-50岁",
+      "coverage_amount": "50万身故/5万医疗",
+      "premium_reference": "310元/年",
+      "key_features": [
+        "无健康告知，亚健康可投",
+        "不限社保0免赔",
+        "含30万猝死保障"
+      ],
+      "limitations": [],
+      "suitable_for": ["亚健康人群", "有慢性病"],
+      "rating": 4.5,
+      "tags": ["成人", "免健告", "猝死"]
+    },
+    {
+      "id": "pingan-xiaotongtong-7",
+      "name": "平安小顽童7号",
+      "company": "平安产险",
+      "category": "少儿意外险",
+      "age_range": "0-17岁",
+      "coverage_amount": "最高20万医疗",
+      "premium_reference": "68元起",
+      "key_features": [
+        "0免赔不限社保100%报销",
+        "含烧烫伤、预防接种保障",
+        "可报私立医院"
+      ],
+      "limitations": [],
+      "suitable_for": ["孩子日常意外保障"],
+      "rating": 4.7,
+      "tags": ["少儿", "0免赔", "烧烫伤"]
+    },
+    {
+      "id": "xiaoshentong-6",
+      "name": "小神童6号",
+      "company": "太平洋财险",
+      "category": "少儿意外险",
+      "age_range": "0-17岁",
+      "coverage_amount": "最高150万伤残",
+      "premium_reference": "约68-168元/年",
+      "key_features": [
+        "含监护人责任保障",
+        "0免赔不限社保",
+        "儿童走失慰问服务"
+      ],
+      "limitations": [],
+      "suitable_for": ["需要监护人责任保障"],
+      "rating": 4.5,
+      "tags": ["少儿", "监护人责任"]
+    },
+    {
+      "id": "xiaoxinan-5",
+      "name": "孝心安5号",
+      "company": "太平洋财险",
+      "category": "老人意外险",
+      "age_range": "50-85岁",
+      "coverage_amount": "多计划可选",
+      "premium_reference": "约100-300元/年",
+      "key_features": [
+        "健告宽松",
+        "意外医疗和住院津贴0免赔不限社保",
+        "含电信诈骗保障"
+      ],
+      "limitations": [],
+      "suitable_for": ["给父母买意外险"],
+      "rating": 4.5,
+      "tags": ["老人", "高龄可投", "电信诈骗"]
+    },
+    {
+      "id": "dahujia-8-gaoling",
+      "name": "大护甲8号高龄版",
+      "company": "人保财险",
+      "category": "老人意外险",
+      "age_range": "50-85岁",
+      "coverage_amount": "多版本可选",
+      "premium_reference": "约100-400元/年",
+      "key_features": [
+        "大公司理赔稳",
+        "意外医疗不限医保",
+        "骨折/住院津贴"
+      ],
+      "limitations": [],
+      "suitable_for": ["偏好大品牌老人意外险"],
+      "rating": 4.4,
+      "tags": ["老人", "大品牌", "骨折津贴"]
+    }
+  ]
+}
