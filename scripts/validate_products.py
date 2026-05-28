@@ -54,9 +54,11 @@ def validate_file(filepath, category):
             if field not in p or not p[field]:
                 issues.append(f"[{name}] 缺少必须字段: {field}")
 
-        # 检查推荐字段
+        # 检查推荐字段（premium_reference 有 annual_premium_range 也算合格）
         for field in RECOMMENDED_FIELDS:
             if field not in p or not p[field]:
+                if field == "premium_reference" and p.get("annual_premium_range"):
+                    continue
                 warnings.append(f"[{name}] 缺少推荐字段: {field}")
 
         # 检查tags格式
