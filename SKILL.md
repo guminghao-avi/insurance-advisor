@@ -97,11 +97,11 @@ language: zh-CN
 
 | 险种 | 文件 | 产品数 |
 |------|------|--------|
-| 医疗险 | `data/medical.json` | 36款 |
-| 重疾险 | `data/critical-illness.json` | 10款 |
-| 意外险 | `data/accident.json` | 7款 |
-| 寿险 | `data/life.json` | 8款 |
-| 理财险 | `data/investment.json` | 6款 |
+| 医疗险 | `data/medical.json` | 38款 |
+| 重疾险 | `data/critical-illness.json` | 14款 |
+| 意外险 | `data/accident.json` | 10款 |
+| 寿险 | `data/life.json` | 12款 |
+| 理财险 | `data/investment.json` | 8款 |
 | 香港保险 | `data/hongkong.json` | 6款 |
 
 ## 参考文档

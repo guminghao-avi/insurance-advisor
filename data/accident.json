@@ -131,6 +131,64 @@
       "suitable_for": ["偏好大品牌老人意外险"],
       "rating": 4.4,
       "tags": ["老人", "大品牌", "骨折津贴"]
+    },
+    {
+      "id": "xiaomifeng-6",
+      "name": "小蜜蜂6号综合意外险",
+      "company": "太平洋财险",
+      "category": "成人意外险",
+      "age_range": "18-50岁",
+      "coverage_amount": "最高150万身故/15万医疗",
+      "premium_reference": "118元起（经典版）",
+      "key_features": [
+        "小蜜蜂系列升级版",
+        "意外医疗0免赔不限社保",
+        "节假日交通意外翻倍赔",
+        "航空意外最高1000万",
+        "含猝死保障"
+      ],
+      "limitations": ["投保年龄上限50岁", "仅1-3类职业"],
+      "suitable_for": ["追求高性价比", "经常加班熬夜"],
+      "rating": 4.6,
+      "tags": ["成人", "高性价比", "不限社保", "猝死"]
+    },
+    {
+      "id": "qilinbao-1",
+      "name": "亚太麒麟保1号意外险",
+      "company": "亚太财险",
+      "category": "成人意外险",
+      "age_range": "18-60岁",
+      "coverage_amount": "最高100万身故",
+      "premium_reference": "96元起",
+      "key_features": [
+        "无健康告知",
+        "价格极低96元起",
+        "意外医疗0免赔不限社保",
+        "含ICU津贴和救护车费用"
+      ],
+      "limitations": ["仅1-3类职业", "T+3日生效"],
+      "suitable_for": ["亚健康人群", "追求极致性价比"],
+      "rating": 4.3,
+      "tags": ["成人", "免健告", "低保费", "性价比"]
+    },
+    {
+      "id": "xiaoxinan-6",
+      "name": "孝心安6号",
+      "company": "太平洋财险",
+      "category": "老人意外险",
+      "age_range": "50-85岁",
+      "coverage_amount": "多计划可选",
+      "premium_reference": "约120-400元/年",
+      "key_features": [
+        "孝心安升级版",
+        "特需医疗也能报",
+        "身故、医疗保障全面升级",
+        "增值服务丰富"
+      ],
+      "limitations": ["老人意外险保额普遍较低"],
+      "suitable_for": ["给父母买意外险", "想要就医体验更好"],
+      "rating": 4.5,
+      "tags": ["老人", "特需医疗", "高龄可投"]
     }
   ]
 }

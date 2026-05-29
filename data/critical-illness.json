@@ -208,6 +208,91 @@
       "suitable_for": ["追求全面少儿保障", "想要多次赔付"],
       "rating": 4.6,
       "tags": ["少儿", "多次赔付", "癌症扩展"]
+    },
+    {
+      "id": "jiruibao-6",
+      "name": "吉瑞保6.0",
+      "company": "瑞华健康",
+      "category": "重疾险",
+      "type": "单次赔付",
+      "age_range": "28天-60岁",
+      "coverage_period": "保终身",
+      "coverage_range": "10-60万",
+      "premium_reference": "30岁男/50万/终身约5000余元",
+      "key_features": [
+        "投保年龄放宽至60岁",
+        "可选纯重疾或附加轻中症",
+        "60岁后重疾额外赔100%保额",
+        "恶性肿瘤医疗津贴可选"
+      ],
+      "limitations": ["赔过重疾后不可再赔轻中症"],
+      "suitable_for": ["年龄偏大", "追求纯重疾保障", "加保需求"],
+      "rating": 4.4,
+      "tags": ["纯重疾", "高龄可投", "性价比"]
+    },
+    {
+      "id": "qingyunwei-6",
+      "name": "青云卫6号",
+      "company": "招商仁和",
+      "category": "少儿重疾险",
+      "type": "单次赔付",
+      "age_range": "0-17岁",
+      "coverage_period": "保30年/70岁/终身",
+      "coverage_range": "10-50万",
+      "premium_reference": "0岁男/50万/终身约3510元",
+      "key_features": [
+        "央企背景（招商局+中国移动）",
+        "18岁前重疾保额每年递增3万",
+        "白血病骨髓移植额外赔50%",
+        "含中枢性性早熟、肥胖手术保障",
+        "缴费期内重疾可返还已交保费"
+      ],
+      "limitations": ["价格略高于同类"],
+      "suitable_for": ["偏爱大公司", "看重白血病保障", "注重全面保障"],
+      "rating": 4.5,
+      "tags": ["少儿", "央企", "白血病", "保额递增"]
+    },
+    {
+      "id": "dahuangfeng-16-quanneng",
+      "name": "大黄蜂16号（全能版）",
+      "company": "北京人寿",
+      "category": "少儿重疾险",
+      "type": "单次赔付",
+      "age_range": "0-17岁",
+      "coverage_period": "保30年/至85岁/终身",
+      "coverage_range": "10-50万",
+      "premium_reference": "0岁男/50万/终身约3025元",
+      "key_features": [
+        "含少儿自闭症、抑郁赔付",
+        "18岁前移植手术额外赔40万",
+        "特疾额外赔120%保额",
+        "可选疾病额外赔、癌症多次赔"
+      ],
+      "limitations": ["特色保障条款较复杂"],
+      "suitable_for": ["追求特色保障丰富", "关注儿童心理健康"],
+      "rating": 4.6,
+      "tags": ["少儿", "自闭症", "特疾赔最多", "全面"]
+    },
+    {
+      "id": "mamibao-nezha-shouhu",
+      "name": "妈咪保贝哪吒守护",
+      "company": "复星联合健康",
+      "category": "少儿重疾险",
+      "type": "单次赔付",
+      "age_range": "0-17岁",
+      "coverage_period": "保30年/至70岁/终身",
+      "coverage_range": "10-50万",
+      "premium_reference": "0岁男/50万/终身约3200元",
+      "key_features": [
+        "自带5000元一般医疗金（门急诊/牙科/眼科/疫苗）",
+        "附加重疾多次赔可保同种重疾",
+        "少儿特疾额外赔",
+        "重疾后轻中症不中断"
+      ],
+      "limitations": ["医疗金额度较低"],
+      "suitable_for": ["想要重疾+小额医疗组合", "看重同种重疾二次赔"],
+      "rating": 4.5,
+      "tags": ["少儿", "医疗金", "同种重疾二次赔"]
     }
   ]
 }

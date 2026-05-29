@@ -191,6 +191,46 @@
         "央企"
       ],
       "irr_reference": "保底IRR约1.0-1.8%，加分红预期可达3.5%+"
+    },
+    {
+      "id": "fuxing-xingfujia-zhuque",
+      "name": "星福家朱雀版",
+      "company": "复星保德信",
+      "category": "增额终身寿",
+      "type": "分红型",
+      "age_range": "0-65岁",
+      "coverage_period": "终身",
+      "premium_reference": "年交3万起",
+      "key_features": [
+        "2026分红增额寿预期收益最高",
+        "预定利率1.75%，演示利率4.25%",
+        "含年度分红+终了分红",
+        "对接复星养老社区+信托"
+      ],
+      "limitations": ["分红不保证", "起投门槛较高（3万）"],
+      "suitable_for": ["接受分红浮动", "追求高预期收益"],
+      "rating": 4.5,
+      "tags": ["增额寿", "分红型", "高预期", "养老社区"]
+    },
+    {
+      "id": "xinhua-ezengfu",
+      "name": "新华E增福优享版",
+      "company": "新华人寿",
+      "category": "增额终身寿",
+      "type": "固收型",
+      "age_range": "0-70岁",
+      "coverage_period": "终身",
+      "premium_reference": "年交2千起，趸交5千起",
+      "key_features": [
+        "大品牌新华人寿",
+        "趸交/3年交第4年回本",
+        "对接23家养老社区",
+        "投保门槛低"
+      ],
+      "limitations": ["IRR略低于顶级产品", "品牌溢价"],
+      "suitable_for": ["偏好大品牌", "预算有限", "需要养老社区"],
+      "rating": 4.3,
+      "tags": ["增额寿", "固收", "大品牌", "低门槛"]
     }
   ]
 }

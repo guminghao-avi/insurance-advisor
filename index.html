@@ -1,0 +1,1931 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>保险智选顾问</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ========== RESET & VARIABLES ========== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --navy: #0A1628;
+  --navy-light: #162035;
+  --navy-mid: #1E2D4A;
+  --gold: #C9A96E;
+  --gold-light: #E8D5B0;
+  --gold-dim: rgba(201,169,110,0.15);
+  --bg: #F7F8FA;
+  --white: #FFFFFF;
+  --text: #1A1A2E;
+  --text-sec: #6B7280;
+  --text-light: #9CA3AF;
+  --border: #E5E7EB;
+  --success: #059669;
+  --warning: #D97706;
+  --danger: #DC2626;
+  --radius: 12px;
+  --shadow: 0 1px 3px rgba(10,22,40,0.06), 0 1px 2px rgba(10,22,40,0.04);
+  --shadow-md: 0 4px 6px rgba(10,22,40,0.05), 0 2px 4px rgba(10,22,40,0.03);
+  --shadow-lg: 0 10px 25px rgba(10,22,40,0.08), 0 4px 10px rgba(10,22,40,0.04);
+  --shadow-gold: 0 4px 20px rgba(201,169,110,0.2);
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --serif: 'Noto Serif SC', serif;
+  --sans: 'Noto Sans SC', -apple-system, sans-serif;
+}
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--sans);
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; border: none; font-family: inherit; }
+input, select { font-family: inherit; }
+
+/* ========== NAVBAR ========== */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(10,22,40,0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(201,169,110,0.1);
+  transition: var(--transition);
+}
+.navbar.scrolled { background: rgba(10,22,40,0.98); box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
+.nav-inner {
+  max-width: 1200px; margin: 0 auto;
+  padding: 0 24px; height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  font-family: var(--serif); font-size: 1.25rem; font-weight: 700;
+  color: var(--white); letter-spacing: 0.02em;
+}
+.nav-logo span { color: var(--gold); }
+.nav-links { display: flex; gap: 8px; }
+.nav-links a {
+  padding: 8px 16px; border-radius: 8px;
+  font-size: 0.875rem; font-weight: 500;
+  color: rgba(255,255,255,0.7);
+  transition: var(--transition);
+}
+.nav-links a:hover, .nav-links a.active {
+  color: var(--white); background: rgba(255,255,255,0.08);
+}
+.nav-links a.active { color: var(--gold); }
+.nav-ask {
+  background: rgba(201,169,110,0.15) !important;
+  border: 1px solid rgba(201,169,110,0.3);
+  color: var(--gold-light) !important;
+  font-weight: 600 !important;
+}
+.nav-ask:hover { background: var(--gold) !important; color: var(--white) !important; }
+.mobile-menu { display: none; background: none; color: var(--white); font-size: 1.5rem; padding: 8px; }
+
+/* ========== HERO ========== */
+.hero {
+  min-height: 100vh;
+  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-mid) 50%, #1a3a5c 100%);
+  display: flex; align-items: center;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: -50%; right: -30%;
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(201,169,110,0.08) 0%, transparent 70%);
+  animation: heroGlow 8s ease-in-out infinite;
+}
+.hero::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 120px;
+  background: linear-gradient(to top, var(--bg), transparent);
+}
+@keyframes heroGlow {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+  50% { transform: translate(-30px, 30px) scale(1.1); opacity: 0.8; }
+}
+.hero-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  position: relative; z-index: 1;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 16px; border-radius: 100px;
+  background: rgba(201,169,110,0.12);
+  border: 1px solid rgba(201,169,110,0.2);
+  color: var(--gold-light); font-size: 0.8rem; font-weight: 500;
+  margin-bottom: 24px;
+  opacity: 0; animation: fadeUp 0.8s 0.3s forwards;
+}
+.hero h1 {
+  font-family: var(--serif); font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700; color: var(--white);
+  line-height: 1.2; margin-bottom: 20px;
+  opacity: 0; animation: fadeUp 0.8s 0.5s forwards;
+}
+.hero h1 .highlight { color: var(--gold); position: relative; }
+.hero p {
+  font-size: 1.125rem; color: rgba(255,255,255,0.6);
+  max-width: 560px; margin-bottom: 40px;
+  opacity: 0; animation: fadeUp 0.8s 0.7s forwards;
+}
+.hero-stats {
+  display: flex; gap: 48px;
+  opacity: 0; animation: fadeUp 0.8s 0.9s forwards;
+}
+.hero-stat { text-align: left; }
+.hero-stat .num {
+  font-family: var(--serif); font-size: 2.5rem; font-weight: 700;
+  color: var(--gold); line-height: 1;
+}
+.hero-stat .label {
+  font-size: 0.8rem; color: rgba(255,255,255,0.5);
+  margin-top: 4px;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== SECTIONS ========== */
+.section {
+  padding: 100px 24px;
+  max-width: 1200px; margin: 0 auto;
+}
+.section-header {
+  text-align: center; margin-bottom: 60px;
+}
+.section-header .eyebrow {
+  display: inline-block;
+  font-size: 0.75rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--gold); margin-bottom: 12px;
+}
+.section-header h2 {
+  font-family: var(--serif); font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 700; color: var(--navy);
+  margin-bottom: 16px;
+}
+.section-header p {
+  font-size: 1rem; color: var(--text-sec);
+  max-width: 600px; margin: 0 auto;
+}
+.divider {
+  width: 40px; height: 2px;
+  background: var(--gold); margin: 16px auto;
+}
+
+/* ========== CATEGORY CARDS ========== */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px; margin-top: 40px;
+}
+.cat-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 20px;
+  text-align: center;
+  transition: var(--transition);
+  cursor: pointer;
+  position: relative; overflow: hidden;
+}
+.cat-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px; background: var(--gold);
+  transform: scaleX(0); transition: var(--transition);
+}
+.cat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--gold-light);
+}
+.cat-card:hover::before { transform: scaleX(1); }
+.cat-icon {
+  width: 48px; height: 48px; margin: 0 auto 12px;
+  border-radius: 12px;
+  background: var(--gold-dim);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+  transition: var(--transition);
+}
+.cat-card:hover .cat-icon { background: var(--gold); color: var(--white); }
+.cat-card h3 {
+  font-size: 0.95rem; font-weight: 600;
+  color: var(--navy); margin-bottom: 4px;
+}
+.cat-card .count {
+  font-size: 0.75rem; color: var(--text-light);
+}
+
+/* ========== TABS ========== */
+.tabs {
+  display: flex; gap: 4px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 4px;
+  margin-bottom: 32px;
+  overflow-x: auto;
+}
+.tab-btn {
+  padding: 10px 20px; border-radius: 8px;
+  font-size: 0.875rem; font-weight: 500;
+  color: var(--text-sec);
+  background: transparent;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.tab-btn:hover { color: var(--text); background: rgba(0,0,0,0.03); }
+.tab-btn.active {
+  color: var(--navy); background: var(--navy);
+  color: var(--white); font-weight: 600;
+}
+.tab-content { display: none; }
+.tab-content.active { display: block; animation: fadeIn 0.4s; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* ========== PRODUCT CARDS ========== */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+}
+.prod-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  transition: var(--transition);
+  position: relative;
+}
+.prod-card:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: var(--gold-light);
+  transform: translateY(-2px);
+}
+.prod-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+.prod-name {
+  font-size: 1.1rem; font-weight: 700;
+  color: var(--navy);
+}
+.prod-company {
+  font-size: 0.8rem; color: var(--text-light);
+  margin-top: 2px;
+}
+.prod-badge {
+  padding: 4px 10px; border-radius: 100px;
+  font-size: 0.7rem; font-weight: 600;
+  background: var(--gold-dim); color: var(--gold);
+  white-space: nowrap;
+}
+.prod-tags {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-bottom: 16px;
+}
+.prod-tag {
+  padding: 3px 10px; border-radius: 100px;
+  font-size: 0.7rem; font-weight: 500;
+  background: var(--bg); color: var(--text-sec);
+  border: 1px solid var(--border);
+}
+.prod-features {
+  list-style: none; margin-bottom: 16px;
+}
+.prod-features li {
+  font-size: 0.85rem; color: var(--text-sec);
+  padding: 4px 0; padding-left: 20px;
+  position: relative;
+}
+.prod-features li::before {
+  content: ''; position: absolute; left: 0; top: 11px;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--gold); opacity: 0.6;
+}
+.prod-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 16px; border-top: 1px solid var(--border);
+}
+.prod-premium {
+  font-size: 0.85rem; color: var(--text-sec);
+}
+.prod-premium strong {
+  font-size: 1.1rem; color: var(--navy);
+  font-weight: 700;
+}
+.prod-rating {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 0.85rem; color: var(--gold); font-weight: 600;
+}
+
+/* ========== FORM / RECOMMENDATION ========== */
+.form-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  max-width: 640px; margin: 0 auto;
+}
+.form-group { margin-bottom: 20px; }
+.form-label {
+  display: block; font-size: 0.875rem; font-weight: 600;
+  color: var(--navy); margin-bottom: 8px;
+}
+.form-input, .form-select {
+  width: 100%; padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: var(--text);
+  background: var(--white);
+  transition: var(--transition);
+}
+.form-input:focus, .form-select:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px var(--gold-dim);
+}
+.form-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+}
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 28px; border-radius: 8px;
+  font-size: 0.95rem; font-weight: 600;
+  transition: var(--transition);
+}
+.btn-primary {
+  background: var(--navy); color: var(--white);
+}
+.btn-primary:hover {
+  background: var(--navy-mid);
+  box-shadow: 0 4px 15px rgba(10,22,40,0.3);
+  transform: translateY(-1px);
+}
+.btn-gold {
+  background: var(--gold); color: var(--white);
+}
+.btn-gold:hover {
+  background: #b8944f;
+  box-shadow: var(--shadow-gold);
+  transform: translateY(-1px);
+}
+.btn-outline {
+  background: transparent; color: var(--navy);
+  border: 1px solid var(--border);
+}
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+.btn-block { width: 100%; }
+.btn-sm { padding: 8px 16px; font-size: 0.8rem; }
+
+/* ========== COMPARISON TABLE ========== */
+.compare-container {
+  overflow-x: auto;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.compare-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 0.875rem;
+}
+.compare-table th, .compare-table td {
+  padding: 14px 20px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.compare-table th {
+  background: var(--navy); color: var(--white);
+  font-weight: 600; font-size: 0.8rem;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.compare-table th:first-child {
+  background: var(--navy-light);
+  position: sticky; left: 0; z-index: 2;
+}
+.compare-table td:first-child {
+  font-weight: 600; color: var(--navy);
+  background: var(--bg);
+  position: sticky; left: 0;
+}
+.compare-table tr:hover td { background: rgba(201,169,110,0.04); }
+.compare-table tr:hover td:first-child { background: rgba(201,169,110,0.08); }
+.better { color: var(--success); font-weight: 600; }
+.worse { color: var(--text-light); }
+
+/* ========== CALCULATOR ========== */
+.calc-result {
+  background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+  border-radius: var(--radius);
+  padding: 32px; color: var(--white);
+  text-align: center; margin-top: 24px;
+}
+.calc-result .big-num {
+  font-family: var(--serif);
+  font-size: 3rem; font-weight: 700;
+  color: var(--gold);
+  margin: 12px 0;
+}
+.calc-result .label {
+  font-size: 0.85rem; color: rgba(255,255,255,0.6);
+}
+
+/* ========== COVERAGE GAP ========== */
+.gap-bar-wrap { margin: 16px 0; }
+.gap-bar {
+  height: 12px; border-radius: 6px;
+  background: var(--border);
+  overflow: hidden; position: relative;
+}
+.gap-bar-fill {
+  height: 100%; border-radius: 6px;
+  background: linear-gradient(90deg, var(--gold), #E8D5B0);
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+.gap-bar-fill::after {
+  content: '';
+  position: absolute; top: 0; right: 0; bottom: 0;
+  width: 30px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3));
+  animation: barShine 2s infinite;
+}
+@keyframes barShine {
+  0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; }
+}
+.gap-labels {
+  display: flex; justify-content: space-between;
+  font-size: 0.8rem; color: var(--text-sec);
+  margin-top: 8px;
+}
+
+/* ========== RESULT CARD ========== */
+.result-list { display: flex; flex-direction: column; gap: 16px; }
+.result-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  display: flex; align-items: center; gap: 20px;
+  transition: var(--transition);
+}
+.result-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--gold-light);
+}
+.result-rank {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--navy); color: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-weight: 700;
+  flex-shrink: 0;
+}
+.result-rank.top { background: var(--gold); }
+.result-info { flex: 1; }
+.result-info h4 { font-size: 1rem; font-weight: 700; color: var(--navy); }
+.result-info .sub { font-size: 0.8rem; color: var(--text-sec); margin-top: 2px; }
+.result-info .reason {
+  font-size: 0.85rem; color: var(--text-sec);
+  margin-top: 8px; padding: 8px 12px;
+  background: var(--bg); border-radius: 8px;
+  border-left: 3px solid var(--gold);
+}
+.result-action { flex-shrink: 0; }
+
+/* ========== FOOTER ========== */
+.footer {
+  background: var(--navy); color: rgba(255,255,255,0.5);
+  padding: 48px 24px; text-align: center;
+  font-size: 0.8rem;
+}
+.footer a { color: var(--gold-light); }
+.footer .disclaimer {
+  max-width: 600px; margin: 16px auto 0;
+  font-size: 0.75rem; line-height: 1.5;
+}
+
+/* ========== LOADING ========== */
+.spinner {
+  width: 32px; height: 32px;
+  border: 3px solid var(--border);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 20px auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ========== TOAST ========== */
+.toast {
+  position: fixed; bottom: 24px; right: 24px;
+  padding: 14px 24px; border-radius: 10px;
+  background: var(--navy); color: var(--white);
+  font-size: 0.875rem; font-weight: 500;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  transform: translateY(100px); opacity: 0;
+  transition: var(--transition); z-index: 200;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* ========== SCROLL REVEAL ========== */
+.reveal {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.8s, transform 0.8s;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ========== MODAL ========== */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(10,22,40,0.6);
+  backdrop-filter: blur(4px);
+  z-index: 150;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: var(--transition);
+}
+.modal-overlay.open { opacity: 1; pointer-events: auto; }
+.modal {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 500px; width: 90%;
+  max-height: 80vh; overflow-y: auto;
+  transform: scale(0.95);
+  transition: var(--transition);
+}
+.modal-overlay.open .modal { transform: scale(1); }
+.modal h3 {
+  font-family: var(--serif); font-size: 1.25rem;
+  color: var(--navy); margin-bottom: 16px;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .mobile-menu { display: block; }
+  .nav-links.open {
+    display: flex; flex-direction: column;
+    position: absolute; top: 64px; left: 0; right: 0;
+    background: var(--navy);
+    padding: 16px; gap: 4px;
+    border-bottom: 1px solid rgba(201,169,110,0.1);
+  }
+  .hero-stats { gap: 24px; flex-wrap: wrap; }
+  .hero-stat .num { font-size: 1.75rem; }
+  .product-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .category-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .cat-card { padding: 16px 12px; }
+  .result-card { flex-direction: column; text-align: center; }
+  .section { padding: 60px 16px; }
+  .tabs { gap: 2px; }
+  .tab-btn { padding: 8px 14px; font-size: 0.8rem; }
+}
+
+/* ========== CHECKBOX STYLE ========== */
+.check-group { display: flex; flex-wrap: wrap; gap: 8px; }
+.check-item {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 14px; border-radius: 8px;
+  border: 1px solid var(--border);
+  font-size: 0.85rem; cursor: pointer;
+  transition: var(--transition);
+}
+.check-item:hover { border-color: var(--gold-light); }
+.check-item.selected {
+  border-color: var(--gold);
+  background: var(--gold-dim);
+  color: var(--gold);
+  font-weight: 600;
+}
+.check-item input { display: none; }
+
+/* ========== CHAT DIALOG ========== */
+.chat-fab {
+  position: fixed; bottom: 24px; right: 24px; z-index: 180;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+  color: var(--white); font-size: 1.5rem;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(10,22,40,0.35);
+  transition: var(--transition);
+  cursor: pointer; border: 2px solid rgba(201,169,110,0.3);
+}
+.chat-fab:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 30px rgba(10,22,40,0.45);
+  border-color: var(--gold);
+}
+.chat-fab .pulse {
+  position: absolute; inset: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  animation: chatPulse 2s infinite;
+}
+@keyframes chatPulse {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+.chat-panel {
+  position: fixed; bottom: 92px; right: 24px; z-index: 190;
+  width: 400px; max-height: 560px;
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(10,22,40,0.2);
+  border: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  transform: translateY(20px) scale(0.95);
+  opacity: 0; pointer-events: none;
+  transition: var(--transition);
+}
+.chat-panel.open {
+  transform: translateY(0) scale(1);
+  opacity: 1; pointer-events: auto;
+}
+.chat-header {
+  padding: 16px 20px;
+  background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+  color: var(--white);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.chat-header-info { display: flex; align-items: center; gap: 10px; }
+.chat-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--gold-dim);
+  border: 2px solid var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+}
+.chat-header-text h4 { font-size: 0.95rem; font-weight: 600; }
+.chat-header-text p { font-size: 0.7rem; color: rgba(255,255,255,0.6); }
+.chat-close {
+  background: none; color: rgba(255,255,255,0.6);
+  font-size: 1.2rem; padding: 4px;
+  transition: var(--transition);
+}
+.chat-close:hover { color: var(--white); }
+.chat-messages {
+  flex: 1; overflow-y: auto; padding: 16px;
+  display: flex; flex-direction: column; gap: 12px;
+  min-height: 300px; max-height: 360px;
+  background: var(--bg);
+}
+.chat-msg {
+  max-width: 85%; padding: 10px 14px;
+  border-radius: 12px; font-size: 0.85rem;
+  line-height: 1.5; animation: msgIn 0.3s ease;
+}
+@keyframes msgIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.chat-msg.bot {
+  background: var(--white);
+  color: var(--text);
+  border: 1px solid var(--border);
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+.chat-msg.user {
+  background: var(--navy);
+  color: var(--white);
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+.chat-msg .product-link {
+  display: inline-block; margin-top: 6px;
+  padding: 4px 10px; border-radius: 6px;
+  background: var(--gold-dim); color: var(--gold);
+  font-size: 0.75rem; font-weight: 600;
+  cursor: pointer; transition: var(--transition);
+}
+.chat-msg .product-link:hover { background: var(--gold); color: var(--white); }
+.chat-quick {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  padding: 8px 16px;
+  border-top: 1px solid var(--border);
+  background: var(--white);
+}
+.chat-quick-btn {
+  padding: 6px 12px; border-radius: 100px;
+  font-size: 0.75rem; font-weight: 500;
+  background: var(--bg); color: var(--text-sec);
+  border: 1px solid var(--border);
+  transition: var(--transition);
+  cursor: pointer;
+}
+.chat-quick-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+.chat-input-area {
+  display: flex; gap: 8px; padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  background: var(--white);
+}
+.chat-input {
+  flex: 1; padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px; font-size: 0.85rem;
+  outline: none; transition: var(--transition);
+}
+.chat-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-dim); }
+.chat-send {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: var(--navy); color: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; transition: var(--transition);
+  flex-shrink: 0;
+}
+.chat-send:hover { background: var(--navy-mid); }
+.typing-dots { display: flex; gap: 4px; padding: 4px 0; }
+.typing-dots span {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--text-light);
+  animation: typingBounce 1.2s infinite;
+}
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingBounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-6px); }
+}
+@media (max-width: 480px) {
+  .chat-panel { right: 8px; left: 8px; width: auto; bottom: 80px; }
+  .chat-fab { bottom: 16px; right: 16px; }
+}
+
+/* ========== HERO CHAT ========== */
+.hero-centered {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+}
+.hero-chat {
+  width: 100%; max-width: 600px;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 40px;
+  opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
+}
+.hero-chat-messages {
+  padding: 16px; min-height: 100px; max-height: 240px;
+  overflow-y: auto;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.hero-chat-messages .chat-msg.bot {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.9);
+  align-self: flex-start;
+}
+.hero-chat-messages .chat-msg.user {
+  background: var(--gold);
+  color: var(--white);
+  align-self: flex-end;
+}
+.hero-quick {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  padding: 0 16px 12px; justify-content: center;
+}
+.hero-quick-btn {
+  padding: 6px 14px; border-radius: 100px;
+  font-size: 0.75rem; font-weight: 500;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.8);
+  cursor: pointer; transition: var(--transition);
+}
+.hero-quick-btn:hover {
+  background: var(--gold); border-color: var(--gold);
+  color: var(--white);
+}
+.hero-chat-input {
+  display: flex; gap: 8px; padding: 12px 16px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.hero-chat-input input {
+  flex: 1; padding: 10px 16px;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.06);
+  color: var(--white); font-size: 0.9rem;
+  outline: none; transition: var(--transition);
+}
+.hero-chat-input input::placeholder { color: rgba(255,255,255,0.35); }
+.hero-chat-input input:focus {
+  border-color: var(--gold);
+  background: rgba(255,255,255,0.1);
+}
+.hero-chat-input button {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: var(--gold); color: var(--white);
+  font-size: 1rem; flex-shrink: 0;
+  transition: var(--transition);
+}
+.hero-chat-input button:hover { background: #b8944f; }
+
+/* ========== PRODUCT DETAIL MODAL ========== */
+.detail-overlay {
+  position: fixed; inset: 0; z-index: 160;
+  background: rgba(10,22,40,0.5);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: var(--transition);
+}
+.detail-overlay.open { opacity: 1; pointer-events: auto; }
+.detail-modal {
+  background: var(--white);
+  border-radius: 16px;
+  max-width: 520px; width: 92%;
+  max-height: 85vh; overflow-y: auto;
+  transform: translateY(20px) scale(0.97);
+  transition: var(--transition);
+  box-shadow: 0 25px 60px rgba(10,22,40,0.25);
+}
+.detail-overlay.open .detail-modal {
+  transform: translateY(0) scale(1);
+}
+.detail-header {
+  padding: 24px 24px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: flex-start;
+  position: sticky; top: 0; background: var(--white);
+  border-radius: 16px 16px 0 0; z-index: 1;
+}
+.detail-header h3 {
+  font-family: var(--serif); font-size: 1.3rem;
+  color: var(--navy); margin-bottom: 4px;
+}
+.detail-header .sub { font-size: 0.8rem; color: var(--text-sec); }
+.detail-close {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: var(--bg); color: var(--text-sec);
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  transition: var(--transition); cursor: pointer; border: none;
+}
+.detail-close:hover { background: var(--border); color: var(--text); }
+.detail-body { padding: 20px 24px 24px; }
+.detail-badge-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.detail-badge {
+  padding: 4px 12px; border-radius: 100px;
+  font-size: 0.75rem; font-weight: 600;
+  background: var(--gold-dim); color: var(--gold);
+}
+.detail-section { margin-bottom: 20px; }
+.detail-section-title {
+  font-size: 0.8rem; font-weight: 600;
+  color: var(--text-sec); text-transform: uppercase;
+  letter-spacing: 0.08em; margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.detail-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+.detail-item {
+  padding: 10px 12px; background: var(--bg); border-radius: 8px;
+}
+.detail-item .label { font-size: 0.7rem; color: var(--text-light); margin-bottom: 2px; }
+.detail-item .value { font-size: 0.9rem; font-weight: 600; color: var(--navy); }
+.detail-list { list-style: none; }
+.detail-list li {
+  padding: 8px 0; font-size: 0.85rem; color: var(--text-sec);
+  padding-left: 20px; position: relative;
+  border-bottom: 1px solid rgba(0,0,0,0.03);
+}
+.detail-list li::before {
+  content: ''; position: absolute; left: 0; top: 14px;
+  width: 8px; height: 8px; border-radius: 50%;
+}
+.detail-list.pros li::before { background: var(--success); opacity: 0.6; }
+.detail-list.cons li::before { background: var(--warning); opacity: 0.6; }
+@media (max-width: 480px) {
+  .hero-chat { margin: 0 -8px 32px; }
+  .detail-modal { max-height: 90vh; }
+  .detail-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">保险<span>智选</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="#home" class="active">首页</a>
+      <a href="#products">产品库</a>
+      <a href="#recommend">智能推荐</a>
+      <a href="#compare">产品对比</a>
+      <a href="#calculator">收益计算</a>
+      <a href="#gap">保障分析</a>
+      <a href="#home" class="nav-ask" onclick="setTimeout(()=>document.getElementById('heroChatInput').focus(),300)">💬 问我</a>
+    </div>
+    <button class="mobile-menu" id="mobileMenu" onclick="toggleMobile()">☰</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-inner hero-centered">
+    <div class="hero-eyebrow">基于 88 款市场热门产品 · 数据驱动</div>
+    <h1>保险<span class="highlight">怎么选</span>？<br>问我就好</h1>
+    <p>不推销、不误导。告诉我你的情况，我帮你从 73 款产品里匹配最合适的方案。</p>
+
+    <!-- HERO CHAT -->
+    <div class="hero-chat">
+      <div class="hero-chat-messages" id="heroChatMessages">
+        <div class="chat-msg bot">
+          你好！我是保险智选顾问。你可以直接问我，或者选一个快捷问题试试 👇
+        </div>
+      </div>
+      <div class="hero-quick">
+        <button class="hero-quick-btn" onclick="heroQuickAsk('30岁，预算5000，推荐什么保险？')">30岁预算5000推荐</button>
+        <button class="hero-quick-btn" onclick="heroQuickAsk('百万医疗险哪款好？')">百万医疗险推荐</button>
+        <button class="hero-quick-btn" onclick="heroQuickAsk('给孩子买什么保险好？')">少儿保险方案</button>
+        <button class="hero-quick-btn" onclick="heroQuickAsk('增额终身寿的IRR一般是多少？')">IRR收益问题</button>
+        <button class="hero-quick-btn" onclick="heroQuickAsk('免健告的产品有哪些？')">免健告产品</button>
+      </div>
+      <div class="hero-chat-input">
+        <input id="heroChatInput" placeholder="描述你的需求，比如：30岁预算5000，想买重疾险..." onkeydown="if(event.key==='Enter')heroSendChat()">
+        <button onclick="heroSendChat()">➤</button>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num" data-count="88">0</div><div class="label">产品数据库</div></div>
+      <div class="hero-stat"><div class="num" data-count="6">0</div><div class="label">险种覆盖</div></div>
+      <div class="hero-stat"><div class="num" data-count="5">0</div><div class="label">分析工具</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="section" id="categories">
+  <div class="section-header reveal">
+    <div class="eyebrow">产品分类</div>
+    <h2>六大险种，全面覆盖</h2>
+    <div class="divider"></div>
+    <p>从基础医疗到高端理财，从内地到香港，一站式保险产品数据库</p>
+  </div>
+  <div class="category-grid reveal" id="categoryGrid"></div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="section" id="products">
+  <div class="section-header reveal">
+    <div class="eyebrow">产品库</div>
+    <h2>精选市场热门产品</h2>
+    <div class="divider"></div>
+    <p>数据来自公开产品信息整理，定期更新</p>
+  </div>
+  <div class="tabs reveal" id="productTabs"></div>
+  <div id="productContent">
+    <div style="text-align:center;padding:60px 0;">
+      <div class="spinner"></div>
+      <p style="color:var(--text-sec);font-size:0.85rem;margin-top:12px;">加载产品数据中...</p>
+    </div>
+  </div>
+</section>
+
+<!-- RECOMMEND -->
+<section class="section" id="recommend">
+  <div class="section-header reveal">
+    <div class="eyebrow">智能推荐</div>
+    <h2>告诉我你的情况</h2>
+    <div class="divider"></div>
+    <p>根据你的年龄、预算和需求，从产品库中匹配最适合的方案</p>
+  </div>
+  <div class="form-card reveal">
+    <div class="form-group">
+      <label class="form-label">给谁买</label>
+      <div class="check-group" id="recTarget">
+        <label class="check-item" onclick="selectOption(this, 'recTarget')"><input type="radio" name="target" value="self"> 自己</label>
+        <label class="check-item" onclick="selectOption(this, 'recTarget')"><input type="radio" name="target" value="child"> 孩子</label>
+        <label class="check-item" onclick="selectOption(this, 'recTarget')"><input type="radio" name="target" value="parent"> 父母</label>
+        <label class="check-item" onclick="selectOption(this, 'recTarget')"><input type="radio" name="target" value="couple"> 夫妻</label>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">年龄</label>
+        <input type="number" class="form-input" id="recAge" placeholder="30" min="0" max="80">
+      </div>
+      <div class="form-group">
+        <label class="form-label">年预算（元）</label>
+        <input type="number" class="form-input" id="recBudget" placeholder="5000">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">需要哪些险种（可多选）</label>
+      <div class="check-group" id="recTypes">
+        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="type" value="medical"> 医疗险</label>
+        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="type" value="critical-illness"> 重疾险</label>
+        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="type" value="accident"> 意外险</label>
+        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="type" value="life"> 寿险</label>
+        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="type" value="investment"> 理财险</label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">最看重什么</label>
+      <div class="check-group" id="recPriority">
+        <label class="check-item" onclick="selectOption(this, 'recPriority')"><input type="radio" name="priority" value="price"> 性价比</label>
+        <label class="check-item" onclick="selectOption(this, 'recPriority')"><input type="radio" name="priority" value="brand"> 大品牌</label>
+        <label class="check-item" onclick="selectOption(this, 'recPriority')"><input type="radio" name="priority" value="coverage"> 保障全面</label>
+        <label class="check-item" onclick="selectOption(this, 'recPriority')"><input type="radio" name="priority" value="stable"> 长期稳定</label>
+      </div>
+    </div>
+    <button class="btn btn-primary btn-block" onclick="getRecommendation()">
+      获取推荐方案
+    </button>
+    <div id="recResult"></div>
+  </div>
+</section>
+
+<!-- COMPARE -->
+<section class="section" id="compare">
+  <div class="section-header reveal">
+    <div class="eyebrow">产品对比</div>
+    <h2>多维度对比，一目了然</h2>
+    <div class="divider"></div>
+    <p>选择 2-3 款同类产品，逐维度比较差异</p>
+  </div>
+  <div class="reveal">
+    <div class="form-row" style="max-width:640px;margin:0 auto 24px;">
+      <div class="form-group">
+        <label class="form-label">选择险种</label>
+        <select class="form-select" id="compareCategory" onchange="loadCompareProducts()">
+          <option value="">请选择</option>
+          <option value="medical">医疗险</option>
+          <option value="critical-illness">重疾险</option>
+          <option value="accident">意外险</option>
+          <option value="life">寿险</option>
+          <option value="investment">理财险</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">选择产品（2-3款）</label>
+        <div id="compareProductList" style="min-height:44px;"></div>
+      </div>
+    </div>
+    <button class="btn btn-primary" style="display:block;margin:0 auto 24px;" onclick="runCompare()">开始对比</button>
+    <div id="compareResult"></div>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section class="section" id="calculator">
+  <div class="section-header reveal">
+    <div class="eyebrow">收益计算</div>
+    <h2>IRR 真实收益率计算器</h2>
+    <div class="divider"></div>
+    <p>用复利思维看保险理财，算清真实回报</p>
+  </div>
+  <div class="form-card reveal">
+    <div class="form-group">
+      <label class="form-label">每年缴费金额（元）</label>
+      <input type="number" class="form-input" id="calcPremium" placeholder="10000">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">缴费年数</label>
+        <input type="number" class="form-input" id="calcYears" placeholder="10">
+      </div>
+      <div class="form-group">
+        <label class="form-label">到期现金价值（元）</label>
+        <input type="number" class="form-input" id="calcCashValue" placeholder="120000">
+      </div>
+    </div>
+    <button class="btn btn-primary btn-block" onclick="calcIRR()">计算 IRR</button>
+    <div id="calcResult"></div>
+  </div>
+</section>
+
+<!-- COVERAGE GAP -->
+<section class="section" id="gap">
+  <div class="section-header reveal">
+    <div class="eyebrow">保障分析</div>
+    <h2>你的保障够不够？</h2>
+    <div class="divider"></div>
+    <p>根据收入和已有保障，计算保障缺口</p>
+  </div>
+  <div class="form-card reveal">
+    <div class="form-group">
+      <label class="form-label">险种类型</label>
+      <select class="form-select" id="gapType">
+        <option value="critical">重疾险（建议保额：年收入3-5倍）</option>
+        <option value="life">寿险（建议保额：年收入10-20倍）</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">年收入（万元）</label>
+        <input type="number" class="form-input" id="gapIncome" placeholder="20">
+      </div>
+      <div class="form-group">
+        <label class="form-label">已有保额（万元）</label>
+        <input type="number" class="form-input" id="gapExisting" placeholder="0">
+      </div>
+    </div>
+    <button class="btn btn-primary btn-block" onclick="calcGap()">分析保障缺口</button>
+    <div id="gapResult"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div style="font-family:var(--serif);font-size:1.1rem;color:var(--white);margin-bottom:8px;">保险<span style="color:var(--gold);">智选</span></div>
+  <p>数据驱动的保险决策助手</p>
+  <div class="disclaimer">
+    免责声明：本工具仅供参考，不构成任何保险购买建议。产品信息来自公开渠道整理，实际条款以保险公司官方为准。购买前请仔细阅读保险条款。
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- PRODUCT DETAIL MODAL -->
+<div class="detail-overlay" id="detailOverlay" onclick="if(event.target===this)closeDetail()">
+  <div class="detail-modal">
+    <div class="detail-header">
+      <div>
+        <h3 id="detailName"></h3>
+        <div class="sub" id="detailCompany"></div>
+      </div>
+      <button class="detail-close" onclick="closeDetail()">✕</button>
+    </div>
+    <div class="detail-body" id="detailBody"></div>
+  </div>
+</div>
+
+
+<script>
+// ========== DATA STORE ==========
+let allProducts = {};
+const categoryInfo = {
+  'medical': { name: '医疗险', icon: '🏥', file: 'data/medical.json' },
+  'critical-illness': { name: '重疾险', icon: '🛡️', file: 'data/critical-illness.json' },
+  'accident': { name: '意外险', icon: '⚡', file: 'data/accident.json' },
+  'life': { name: '寿险', icon: '🏠', file: 'data/life.json' },
+  'investment': { name: '理财险', icon: '📈', file: 'data/investment.json' },
+  'hongkong': { name: '香港保险', icon: '🇭🇰', file: 'data/hongkong.json' }
+};
+
+// ========== LOAD DATA ==========
+async function loadAllData() {
+  const promises = Object.entries(categoryInfo).map(async ([key, info]) => {
+    try {
+      const res = await fetch(info.file);
+      const data = await res.json();
+      allProducts[key] = data.products || [];
+    } catch (e) {
+      console.warn(`Failed to load ${info.file}`);
+      allProducts[key] = [];
+    }
+  });
+  await Promise.all(promises);
+  renderCategories();
+  renderProductTabs();
+  toast('数据加载完成');
+}
+
+// ========== RENDER CATEGORIES ==========
+function renderCategories() {
+  const grid = document.getElementById('categoryGrid');
+  grid.innerHTML = Object.entries(categoryInfo).map(([key, info]) => `
+    <div class="cat-card" onclick="scrollToSection('products'); setTimeout(() => activateTab('${key}'), 300);">
+      <div class="cat-icon">${info.icon}</div>
+      <h3>${info.name}</h3>
+      <div class="count">${(allProducts[key] || []).length} 款产品</div>
+    </div>
+  `).join('');
+}
+
+// ========== PRODUCT TABS ==========
+let currentTab = 'medical';
+function renderProductTabs() {
+  const tabs = document.getElementById('productTabs');
+  tabs.innerHTML = Object.entries(categoryInfo).map(([key, info]) => `
+    <button class="tab-btn ${key === currentTab ? 'active' : ''}" onclick="activateTab('${key}')">${info.name}</button>
+  `).join('');
+  renderProducts(currentTab);
+}
+
+function activateTab(key) {
+  currentTab = key;
+  document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', Object.keys(categoryInfo)[i] === key);
+  });
+  renderProducts(key);
+}
+
+function renderProducts(category) {
+  const container = document.getElementById('productContent');
+  const products = allProducts[category] || [];
+  if (!products.length) {
+    container.innerHTML = '<p style="text-align:center;color:var(--text-sec);padding:40px;">暂无产品数据</p>';
+    return;
+  }
+  container.innerHTML = `<div class="product-grid">${products.map((p, i) => `
+    <div class="prod-card" onclick="showDetail('${category}', ${i})" style="cursor:pointer;">
+      <div class="prod-header">
+        <div>
+          <div class="prod-name">${p.name}</div>
+          <div class="prod-company">${p.company} · ${p.category || ''}</div>
+        </div>
+        ${p.rating ? `<div class="prod-badge">★ ${p.rating}</div>` : ''}
+      </div>
+      <div class="prod-tags">
+        ${(p.tags || []).map(t => `<span class="prod-tag">${t}</span>`).join('')}
+      </div>
+      <ul class="prod-features">
+        ${(p.key_features || []).slice(0, 3).map(f => `<li>${f}</li>`).join('')}
+      </ul>
+      <div class="prod-footer">
+        <div class="prod-premium">${getPremiumDisplay(p)}</div>
+        <div style="font-size:0.8rem;color:var(--gold);font-weight:500;">查看详情 →</div>
+      </div>
+    </div>
+  `).join('')}</div>`;
+}
+
+function getPremiumDisplay(p) {
+  if (p.premium_reference) return `<strong>${p.premium_reference}</strong>`;
+  if (p.annual_premium_range) {
+    const keys = Object.keys(p.annual_premium_range);
+    if (keys.length) {
+      const mid = keys[Math.floor(keys.length / 2)];
+      return `<strong>${p.annual_premium_range[mid]}</strong>`;
+    }
+  }
+  if (p.irr_reference) return `<strong>${p.irr_reference}</strong>`;
+  return '';
+}
+
+// ========== RECOMMENDATION ==========
+function selectOption(el, groupId) {
+  const group = document.getElementById(groupId);
+  group.querySelectorAll('.check-item').forEach(i => i.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function toggleCheck(el) {
+  el.classList.toggle('selected');
+}
+
+function getRecommendation() {
+  const age = parseInt(document.getElementById('recAge').value);
+  const budget = parseInt(document.getElementById('recBudget').value);
+  const targetEl = document.querySelector('#recTarget .check-item.selected input');
+  const priorityEl = document.querySelector('#recPriority .check-item.selected input');
+  const typeEls = document.querySelectorAll('#recTypes .check-item.selected input');
+
+  if (!age || !budget) {
+    toast('请填写年龄和预算');
+    return;
+  }
+
+  const target = targetEl ? targetEl.value : 'self';
+  const priority = priorityEl ? priorityEl.value : 'coverage';
+  const types = Array.from(typeEls).map(e => e.value);
+  if (!types.length) { toast('请至少选择一个险种'); return; }
+
+  const results = [];
+  types.forEach(type => {
+    const products = allProducts[type] || [];
+    const scored = products.map(p => {
+      let score = 0;
+      // Age match
+      if (p.age_range && isAgeInRange(age, p.age_range)) score += 30;
+      // Rating
+      if (p.rating) score += p.rating * 8;
+      // Priority matching
+      if (priority === 'price' && (p.tags || []).some(t => t.includes('性价比') || t.includes('低价'))) score += 20;
+      if (priority === 'brand' && (p.tags || []).some(t => t.includes('大品牌') || t.includes('平安') || t.includes('人保'))) score += 20;
+      if (priority === 'coverage' && (p.key_features || []).length >= 4) score += 15;
+      if (priority === 'stable' && (p.tags || []).some(t => t.includes('保证续保') || t.includes('确定'))) score += 20;
+      // Target matching
+      if (target === 'child' && (p.tags || []).some(t => t.includes('少儿') || t.includes('儿童'))) score += 15;
+      if (target === 'parent' && (p.tags || []).some(t => t.includes('老人') || t.includes('高龄'))) score += 15;
+      // Budget fit (rough check)
+      const premium = extractPremium(p);
+      if (premium > 0 && premium <= budget * 0.4) score += 10;
+      return { ...p, _score: score, _type: type, _typeName: categoryInfo[type]?.name };
+    });
+    scored.sort((a, b) => b._score - a._score);
+    results.push(...scored.slice(0, 2));
+  });
+
+  results.sort((a, b) => b._score - a._score);
+  const top = results.slice(0, 4);
+
+  const container = document.getElementById('recResult');
+  if (!top.length) {
+    container.innerHTML = '<p style="text-align:center;padding:24px;color:var(--text-sec);">未找到匹配的产品，试试调整条件</p>';
+    return;
+  }
+
+  container.innerHTML = `
+    <div style="margin-top:24px;">
+      <h3 style="font-family:var(--serif);color:var(--navy);margin-bottom:16px;">为你推荐 ${top.length} 款产品</h3>
+      <div class="result-list">
+        ${top.map((p, i) => `
+          <div class="result-card">
+            <div class="result-rank ${i === 0 ? 'top' : ''}">${i + 1}</div>
+            <div class="result-info">
+              <h4>${p.name} <span style="font-weight:400;font-size:0.8rem;color:var(--text-light);">· ${p.company}</span></h4>
+              <div class="sub">${p._typeName} · ${p.age_range || ''} · ${p.tags?.join(' / ') || ''}</div>
+              <div class="reason">推荐理由：${getRecommendReason(p, priority, target)}</div>
+            </div>
+            <div class="result-action">
+              <div style="font-size:0.85rem;font-weight:700;color:var(--navy);">${getPremiumDisplay(p)}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function getRecommendReason(p, priority, target) {
+  const reasons = [];
+  if (p.rating >= 4.5) reasons.push('评分优秀');
+  if (priority === 'price') reasons.push('性价比突出');
+  if (priority === 'brand') reasons.push('品牌信赖度高');
+  if (priority === 'coverage') reasons.push('保障范围全面');
+  if (priority === 'stable') reasons.push('长期稳定性好');
+  if (target === 'child' && (p.tags || []).some(t => t.includes('少儿'))) reasons.push('少儿专属');
+  if ((p.key_features || []).length) reasons.push(p.key_features[0]);
+  return reasons.slice(0, 2).join('，') || '综合评分较高';
+}
+
+function extractPremium(p) {
+  if (p.premium_reference) {
+    const m = p.premium_reference.match(/(\d+)/);
+    return m ? parseInt(m[1]) : 0;
+  }
+  return 0;
+}
+
+function isAgeInRange(age, range) {
+  const m = range.match(/(\d+)\s*[-~]\s*(\d+)/);
+  if (m) return age >= parseInt(m[1]) && age <= parseInt(m[2]);
+  return true;
+}
+
+// ========== COMPARE ==========
+let compareCat = '';
+let compareSelected = [];
+function loadCompareProducts() {
+  compareCat = document.getElementById('compareCategory').value;
+  const container = document.getElementById('compareProductList');
+  compareSelected = [];
+  if (!compareCat) { container.innerHTML = '<span style="font-size:0.85rem;color:var(--text-light);">请先选择险种</span>'; return; }
+  const products = allProducts[compareCat] || [];
+  container.innerHTML = `
+    <div class="check-group">
+      ${products.map((p, i) => `
+        <div class="check-item" onclick="toggleCompare(this, ${i})">
+          ${p.name}
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function toggleCompare(el, idx) {
+  if (el.classList.contains('selected')) {
+    el.classList.remove('selected');
+    compareSelected = compareSelected.filter(n => n !== idx);
+  } else {
+    if (compareSelected.length >= 3) {
+      toast('最多选择 3 款产品');
+      return;
+    }
+    el.classList.add('selected');
+    compareSelected.push(idx);
+  }
+}
+
+function runCompare() {
+  if (!compareCat) { toast('请先选择险种'); return; }
+  if (compareSelected.length < 2) { toast('请选择 2-3 款产品'); return; }
+
+  const products = allProducts[compareCat] || [];
+  const selected = compareSelected.map(i => products[i]).filter(Boolean);
+
+  const dims = getCompareDimensions(compareCat, selected);
+  const container = document.getElementById('compareResult');
+  container.innerHTML = `
+    <div class="compare-container">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>对比维度</th>
+            ${selected.map(p => `<th>${p.name}</th>`).join('')}
+          </tr>
+        </thead>
+        <tbody>
+          ${dims.map(d => `
+            <tr>
+              <td>${d.label}</td>
+              ${selected.map(p => `<td>${d.getValue(p)}</td>`).join('')}
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function getCompareDimensions(category, products) {
+  const common = [
+    { label: '承保公司', getValue: p => p.company || '-' },
+    { label: '投保年龄', getValue: p => p.age_range || '-' },
+    { label: '评分', getValue: p => p.rating ? `★ ${p.rating}` : '-' },
+    { label: '核心亮点', getValue: p => (p.key_features || []).slice(0, 2).join('；') || '-' },
+    { label: '注意事项', getValue: p => (p.limitations || []).join('；') || '-' },
+    { label: '标签', getValue: p => (p.tags || []).join('、') || '-' },
+  ];
+
+  if (category === 'medical') {
+    return [
+      ...common.slice(0, 2),
+      { label: '免赔额', getValue: p => p.deductible === 0 ? '0（无免赔）' : p.deductible ? `${p.deductible}元` : '-' },
+      { label: '保额', getValue: p => p.coverage_amount ? `${(p.coverage_amount / 10000).toFixed(0)}万` : '-' },
+      { label: '续保类型', getValue: p => p.renewal_type || '-' },
+      { label: '等待期', getValue: p => p.waiting_period ? `${p.waiting_period}天` : '-' },
+      ...common.slice(2),
+    ];
+  }
+  if (category === 'critical-illness') {
+    return [
+      ...common.slice(0, 2),
+      { label: '保障期间', getValue: p => p.coverage_period || '-' },
+      { label: '保额范围', getValue: p => p.coverage_range || '-' },
+      { label: '保费参考', getValue: p => p.premium_reference || '-' },
+      ...common.slice(2),
+    ];
+  }
+  if (category === 'accident') {
+    return [
+      ...common.slice(0, 2),
+      { label: '保额', getValue: p => p.coverage_amount || '-' },
+      { label: '保费', getValue: p => p.premium_reference || '-' },
+      ...common.slice(2),
+    ];
+  }
+  if (category === 'life') {
+    return [
+      ...common.slice(0, 2),
+      { label: '保障期间', getValue: p => p.coverage_period || '-' },
+      { label: '保额', getValue: p => p.coverage_amount || '-' },
+      { label: '保费参考', getValue: p => p.premium_reference || '-' },
+      { label: 'IRR参考', getValue: p => p.irr_reference || '-' },
+      ...common.slice(2),
+    ];
+  }
+  if (category === 'investment') {
+    return [
+      ...common.slice(0, 2),
+      { label: '产品类型', getValue: p => p.type || '-' },
+      { label: '保障期间', getValue: p => p.coverage_period || '-' },
+      { label: 'IRR参考', getValue: p => p.irr_reference || '-' },
+      ...common.slice(2),
+    ];
+  }
+  return common;
+}
+
+// ========== IRR CALCULATOR (Newton's Method) ==========
+function calcIRR() {
+  const premium = parseFloat(document.getElementById('calcPremium').value);
+  const years = parseInt(document.getElementById('calcYears').value);
+  const cashValue = parseFloat(document.getElementById('calcCashValue').value);
+
+  if (!premium || !years || !cashValue) {
+    toast('请填写完整信息');
+    return;
+  }
+
+  const totalPremium = premium * years;
+  const gain = cashValue - totalPremium;
+
+  // NPV function
+  function npv(r) {
+    let sum = 0;
+    for (let t = 1; t <= years; t++) {
+      sum -= premium / Math.pow(1 + r, t);
+    }
+    sum += cashValue / Math.pow(1 + r, years);
+    return sum;
+  }
+
+  // Derivative of NPV
+  function npvDeriv(r) {
+    let sum = 0;
+    for (let t = 1; t <= years; t++) {
+      sum += premium * t / Math.pow(1 + r, t + 1);
+    }
+    sum -= years * cashValue / Math.pow(1 + r, years + 1);
+    return sum;
+  }
+
+  // Newton's method
+  let irr = 0.03;
+  for (let i = 0; i < 100; i++) {
+    const f = npv(irr);
+    const df = npvDeriv(irr);
+    if (Math.abs(df) < 1e-12) break;
+    const next = irr - f / df;
+    if (Math.abs(next - irr) < 1e-8) { irr = next; break; }
+    irr = next;
+  }
+
+  // Fallback: binary search if Newton fails
+  if (irr < -0.1 || irr > 0.5 || isNaN(irr)) {
+    let lo = -0.1, hi = 0.3;
+    for (let i = 0; i < 200; i++) {
+      const mid = (lo + hi) / 2;
+      if (npv(mid) > 0) lo = mid; else hi = mid;
+    }
+    irr = (lo + hi) / 2;
+  }
+
+  const container = document.getElementById('calcResult');
+  container.innerHTML = `
+    <div class="calc-result">
+      <div class="label">年化内部收益率（IRR）</div>
+      <div class="big-num">${(irr * 100).toFixed(2)}%</div>
+      <div style="display:flex;justify-content:center;gap:32px;margin-top:16px;">
+        <div><div style="font-size:1.5rem;font-weight:700;">${totalPremium.toLocaleString()}</div><div class="label">总投入（元）</div></div>
+        <div><div style="font-size:1.5rem;font-weight:700;">${cashValue.toLocaleString()}</div><div class="label">到期价值（元）</div></div>
+        <div><div style="font-size:1.5rem;font-weight:700;color:${gain >= 0 ? '#059669' : '#DC2626'}">${gain >= 0 ? '+' : ''}${gain.toLocaleString()}</div><div class="label">收益（元）</div></div>
+      </div>
+      <div style="margin-top:16px;font-size:0.8rem;color:rgba(255,255,255,0.5);">
+        对比参考：银行1年定存约1.5% · 3年定存约1.95% · 10年国债约1.7%
+      </div>
+    </div>
+  `;
+}
+
+// ========== COVERAGE GAP ==========
+function calcGap() {
+  const type = document.getElementById('gapType').value;
+  const income = parseFloat(document.getElementById('gapIncome').value);
+  const existing = parseFloat(document.getElementById('gapExisting').value) || 0;
+
+  if (!income) { toast('请填写年收入'); return; }
+
+  const multiplier = type === 'critical' ? 4 : 15;
+  const recommended = income * multiplier;
+  const gap = Math.max(0, recommended - existing);
+  const coveragePct = Math.min(100, (existing / recommended) * 100);
+
+  const container = document.getElementById('gapResult');
+  container.innerHTML = `
+    <div style="margin-top:24px;">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
+        <span style="font-size:0.85rem;color:var(--text-sec);">保障充足度</span>
+        <span style="font-size:1.25rem;font-weight:700;color:var(--navy);">${coveragePct.toFixed(0)}%</span>
+      </div>
+      <div class="gap-bar-wrap">
+        <div class="gap-bar">
+          <div class="gap-bar-fill" style="width:0%;" id="gapBarFill"></div>
+        </div>
+        <div class="gap-labels">
+          <span>0</span>
+          <span>建议 ${recommended}万</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;">
+        <div style="background:var(--bg);border-radius:10px;padding:16px;text-align:center;">
+          <div style="font-size:1.75rem;font-weight:700;color:var(--navy);">${recommended}万</div>
+          <div style="font-size:0.8rem;color:var(--text-sec);">建议保额</div>
+        </div>
+        <div style="background:${gap > 0 ? 'rgba(201,169,110,0.1)' : 'rgba(5,150,105,0.1)'};border-radius:10px;padding:16px;text-align:center;">
+          <div style="font-size:1.75rem;font-weight:700;color:${gap > 0 ? 'var(--gold)' : 'var(--success)'};">${gap}万</div>
+          <div style="font-size:0.8rem;color:var(--text-sec);">${gap > 0 ? '保障缺口' : '保障充足'}</div>
+        </div>
+      </div>
+      ${gap > 0 ? `<div style="margin-top:16px;padding:12px 16px;background:var(--gold-dim);border-radius:8px;font-size:0.85rem;color:var(--text);">
+        <strong>建议：</strong>你还缺 ${gap} 万${type === 'critical' ? '重疾' : '寿险'}保额。可以考虑配置一份定期${type === 'critical' ? '重疾险' : '寿险'}来补充。
+      </div>` : ''}
+    </div>
+  `;
+
+  // Animate bar
+  setTimeout(() => {
+    document.getElementById('gapBarFill').style.width = coveragePct + '%';
+  }, 100);
+}
+
+// ========== UTILITIES ==========
+function scrollToSection(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+}
+
+function toggleMobile() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ========== SCROLL EFFECTS ==========
+function initScrollEffects() {
+  // Navbar
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+
+    // Active nav link
+    const sections = ['home', 'products', 'recommend', 'compare', 'calculator', 'gap'];
+    let current = 'home';
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && el.getBoundingClientRect().top <= 100) current = id;
+    });
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+
+  // Reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Counter animation
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.dataset.count);
+        animateCounter(el, target);
+        counterObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
+}
+
+function animateCounter(el, target) {
+  let current = 0;
+  const step = target / 30;
+  const interval = setInterval(() => {
+    current += step;
+    if (current >= target) { current = target; clearInterval(interval); }
+    el.textContent = Math.round(current);
+  }, 30);
+}
+
+// ========== PRODUCT DETAIL ==========
+function showDetail(category, idx) {
+  const p = (allProducts[category] || [])[idx];
+  if (!p) return;
+  document.getElementById('detailName').textContent = p.name;
+  document.getElementById('detailCompany').textContent = `${p.company} · ${p.category || ''}`;
+
+  let html = '';
+  // Tags
+  if (p.tags?.length) {
+    html += `<div class="detail-badge-row">${p.tags.map(t => `<span class="detail-badge">${t}</span>`).join('')}</div>`;
+  }
+  // Basic info grid
+  const fields = [];
+  if (p.age_range) fields.push({ label: '投保年龄', value: p.age_range });
+  if (p.coverage_period) fields.push({ label: '保障期间', value: p.coverage_period });
+  if (p.coverage_amount) fields.push({ label: '保额', value: typeof p.coverage_amount === 'number' ? `${(p.coverage_amount/10000).toFixed(0)}万` : p.coverage_amount });
+  if (p.coverage_range) fields.push({ label: '保额范围', value: p.coverage_range });
+  if (p.deductible !== undefined) fields.push({ label: '免赔额', value: p.deductible === 0 ? '0（无免赔）' : `${p.deductible}元` });
+  if (p.renewal_type) fields.push({ label: '续保', value: p.renewal_type });
+  if (p.waiting_period) fields.push({ label: '等待期', value: `${p.waiting_period}天` });
+  if (p.type) fields.push({ label: '产品类型', value: p.type });
+  if (p.premium_reference) fields.push({ label: '保费参考', value: p.premium_reference });
+  if (p.irr_reference) fields.push({ label: 'IRR参考', value: p.irr_reference });
+  if (p.rating) fields.push({ label: '评分', value: `★ ${p.rating}` });
+
+  if (fields.length) {
+    html += `<div class="detail-section"><div class="detail-section-title">基本信息</div><div class="detail-grid">`;
+    fields.forEach(f => {
+      html += `<div class="detail-item"><div class="label">${f.label}</div><div class="value">${f.value}</div></div>`;
+    });
+    html += `</div></div>`;
+  }
+
+  // Annual premium range
+  if (p.annual_premium_range) {
+    html += `<div class="detail-section"><div class="detail-section-title">各年龄段保费参考</div><div class="detail-grid">`;
+    Object.entries(p.annual_premium_range).forEach(([age, price]) => {
+      html += `<div class="detail-item"><div class="label">${age}</div><div class="value">${price}</div></div>`;
+    });
+    html += `</div></div>`;
+  }
+
+  // Features
+  if (p.key_features?.length) {
+    html += `<div class="detail-section"><div class="detail-section-title">核心亮点</div><ul class="detail-list pros">`;
+    p.key_features.forEach(f => { html += `<li>${f}</li>`; });
+    html += `</ul></div>`;
+  }
+
+  // Limitations
+  if (p.limitations?.length) {
+    html += `<div class="detail-section"><div class="detail-section-title">注意事项</div><ul class="detail-list cons">`;
+    p.limitations.forEach(f => { html += `<li>${f}</li>`; });
+    html += `</ul></div>`;
+  }
+
+  // Suitable for
+  if (p.suitable_for?.length) {
+    html += `<div class="detail-section"><div class="detail-section-title">适合人群</div><div style="font-size:0.85rem;color:var(--text-sec);">`;
+    html += p.suitable_for.join('、');
+    html += `</div></div>`;
+  }
+
+  document.getElementById('detailBody').innerHTML = html;
+  document.getElementById('detailOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeDetail() {
+  document.getElementById('detailOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ========== HERO CHAT ==========
+function heroSendChat() {
+  const input = document.getElementById('heroChatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+  input.value = '';
+  heroAddMsg(msg, 'user');
+  // Typing indicator
+  const container = document.getElementById('heroChatMessages');
+  const typing = document.createElement('div');
+  typing.className = 'chat-msg bot';
+  typing.id = 'heroTyping';
+  typing.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+  container.appendChild(typing);
+  container.scrollTop = container.scrollHeight;
+  setTimeout(() => {
+    typing.remove();
+    heroAddMsg(generateReply(msg), 'bot');
+  }, 600 + Math.random() * 800);
+}
+function heroQuickAsk(q) {
+  document.getElementById('heroChatInput').value = q;
+  heroSendChat();
+}
+function heroAddMsg(text, type) {
+  const container = document.getElementById('heroChatMessages');
+  const div = document.createElement('div');
+  div.className = `chat-msg ${type}`;
+  div.innerHTML = text;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function generateReply(msg) {
+  const lower = msg.toLowerCase();
+
+  // 推荐类
+  if (lower.includes('推荐') || lower.includes('买什么') || lower.includes('适合')) {
+    if (lower.includes('医疗') || lower.includes('百万医疗')) {
+      const products = allProducts['medical'] || [];
+      const top = products.filter(p => (p.rating || 0) >= 4.5).slice(0, 3);
+      return `百万医疗险推荐这 3 款：<br><br>${top.map((p, i) => {
+        const idx = products.indexOf(p);
+        return `<b>${i+1}. ${p.name}</b>（${p.company}）<br>评分 ${p.rating} · ${p.tags?.join(' / ') || ''}<br>${p.key_features?.[0] || ''}<span class="product-link" onclick="showDetail('medical',${idx})">查看详情</span>`;
+      }).join('<br><br>')}`;
+    }
+    if (lower.includes('重疾')) {
+      const products = allProducts['critical-illness'] || [];
+      const top = products.filter(p => (p.rating || 0) >= 4.5).slice(0, 3);
+      return `重疾险推荐：<br><br>${top.map((p, i) => {
+        const idx = products.indexOf(p);
+        return `<b>${i+1}. ${p.name}</b>（${p.company}）<br>${p.premium_reference || ''} · ${p.tags?.join(' / ') || ''}<br>${p.key_features?.[0] || ''}<span class="product-link" onclick="showDetail('critical-illness',${idx})">查看详情</span>`;
+      }).join('<br><br>')}`;
+    }
+    if (lower.includes('意外')) {
+      const products = allProducts['accident'] || [];
+      const top = products.filter(p => (p.rating || 0) >= 4.5).slice(0, 3);
+      return `意外险推荐：<br><br>${top.map((p, i) => {
+        const idx = products.indexOf(p);
+        return `<b>${i+1}. ${p.name}</b>（${p.company}）<br>${p.premium_reference || ''} · ${p.coverage_amount || ''}<br>${p.key_features?.[0] || ''}<span class="product-link" onclick="showDetail('accident',${idx})">查看详情</span>`;
+      }).join('<br><br>')}`;
+    }
+    if (lower.includes('寿险') || lower.includes('定寿') || lower.includes('定期寿')) {
+      const products = allProducts['life'] || [];
+      const top = products.filter(p => p.category?.includes('定期')).slice(0, 3);
+      return `定期寿险推荐：<br><br>${top.map((p, i) => {
+        const idx = products.indexOf(p);
+        return `<b>${i+1}. ${p.name}</b>（${p.company}）<br>${p.premium_reference || ''}<br>${p.key_features?.[0] || ''}<span class="product-link" onclick="showDetail('life',${idx})">查看详情</span>`;
+      }).join('<br><br>')}`;
+    }
+    if (lower.includes('理财') || lower.includes('年金') || lower.includes('增额')) {
+      const products = allProducts['investment'] || [];
+      return `理财险推荐：<br><br>${products.slice(0, 3).map((p, i) => {
+        const idx = products.indexOf(p);
+        return `<b>${i+1}. ${p.name}</b>（${p.company}）<br>${p.irr_reference || ''}<br>${p.key_features?.[0] || ''}<span class="product-link" onclick="showDetail('investment',${idx})">查看详情</span>`;
+      }).join('<br><br>')}`;
+    }
+    if (lower.includes('少儿') || lower.includes('孩子') || lower.includes('儿童') || lower.includes('小孩')) {
+      const ci = (allProducts['critical-illness'] || []).filter(p => (p.tags||[]).some(t => t.includes('少儿')));
+      const acc = (allProducts['accident'] || []).filter(p => (p.tags||[]).some(t => t.includes('少儿')));
+      return `给孩子买保险，建议这个组合：<br><br><b>少儿重疾险：</b><br>${ci.map(p => {
+        const idx = (allProducts['critical-illness']||[]).indexOf(p);
+        return `· ${p.name}（${p.company}）— ${p.key_features?.[0] || ''} <span class="product-link" onclick="showDetail('critical-illness',${idx})">详情</span>`;
+      }).join('<br>')}<br><br><b>少儿意外险：</b><br>${acc.map(p => {
+        const idx = (allProducts['accident']||[]).indexOf(p);
+        return `· ${p.name}（${p.company}）— ${p.key_features?.[0] || ''} <span class="product-link" onclick="showDetail('accident',${idx})">详情</span>`;
+      }).join('<br>')}<br><br>💡 先配医保（少儿医保），再补充商业险。预算有限优先百万医疗+意外险。`;
+    }
+    if (lower.includes('父母') || lower.includes('老人') || lower.includes('老年')) {
+      const acc = (allProducts['accident'] || []).filter(p => (p.tags||[]).some(t => t.includes('老人')));
+      const med = (allProducts['medical'] || []).filter(p => (p.tags||[]).some(t => t.includes('防癌')));
+      return `给父母买保险：<br><br><b>老人意外险：</b><br>${acc.map(p => {
+        const idx = (allProducts['accident']||[]).indexOf(p);
+        return `· ${p.name} — ${p.key_features?.[0] || ''} <span class="product-link" onclick="showDetail('accident',${idx})">详情</span>`;
+      }).join('<br>')}<br><br><b>防癌医疗险（三高可投）：</b><br>${med.map(p => {
+        const idx = (allProducts['medical']||[]).indexOf(p);
+        return `· ${p.name} — ${p.key_features?.[0] || ''} <span class="product-link" onclick="showDetail('medical',${idx})">详情</span>`;
+      }).join('<br>')}<br><br>💡 父母超过60岁，百万医疗可能买不了，防癌医疗是替代方案。`;
+    }
+    // 通用推荐
+    return `你可以告诉我更具体的需求，我来帮你匹配：<br><br>· 给谁买？（自己/孩子/父母）<br>· 年龄和预算？<br>· 想要什么险种？<br><br>或者直接点击下方快捷按钮 👇`;
+  }
+
+  // 免健告
+  if (lower.includes('免健告') || lower.includes('免健康告知') || lower.includes('带病投保') || lower.includes('既往症')) {
+    const results = [];
+    Object.entries(allProducts).forEach(([cat, products]) => {
+      products.forEach(p => {
+        if ((p.tags || []).some(t => t.includes('免健告') || t.includes('既往症'))) {
+          results.push(p);
+        }
+      });
+    });
+    return `免健康告知的产品有 ${results.length} 款：<br><br>${results.map(p =>
+      `· <b>${p.name}</b>（${p.company}）— ${p.category}`
+    ).join('<br>')}<br><br>💡 免健告产品适合有慢性病、结节、乙肝等健康问题的人群。注意看既往症是否赔付。`;
+  }
+
+  // IRR / 收益
+  if (lower.includes('irr') || lower.includes('收益') || lower.includes('回本') || lower.includes('划算')) {
+    return `<b>IRR（内部收益率）</b>是衡量保险理财产品真实收益的核心指标。<br><br>📊 当前市场参考：<br>· 银行1年定存：约1.5%<br>· 3年定存：约1.95%<br>· 10年国债：约1.7%<br><br>增额终身寿 IRR：<br>· 固收型：约1.89-1.97%（确定写入合同）<br>· 分红型：保底1.0-1.8% + 分红预期可达3.5%+<br><br>年金险 IRR：<br>· 传统型：约1.8-2.3%（确定）<br>· 分红型：保证约1.5% + 分红预期2.5-3.5%<br><br>💡 保险的核心优势是<b>锁定长期利率</b>，适合10年以上的资金规划。<span class="product-link" onclick="scrollToSection('calculator')">打开IRR计算器</span>`;
+  }
+
+  // 保障缺口
+  if (lower.includes('够不够') || lower.includes('缺口') || lower.includes('还差多少') || lower.includes('保额')) {
+    return `保障是否充足，主要看两个维度：<br><br><b>重疾险：</b>建议保额 = 年收入 × 3-5倍<br><b>寿险：</b>建议保额 = 年收入 × 10-20倍<br><b>保费占比：</b>建议占年收入 5-10%<br><br>举个例子：年收入20万，重疾险建议80-100万保额。<span class="product-link" onclick="scrollToSection('gap')">打开保障缺口分析</span>`;
+  }
+
+  // 对比
+  if (lower.includes('对比') || lower.includes('比较') || lower.includes('哪个好') || lower.includes('区别')) {
+    return `你可以使用我们的<b>产品对比工具</b>，选择 2-3 款同类产品，从投保年龄、保额、免赔额、续保条件等多个维度逐项对比。<span class="product-link" onclick="scrollToSection('compare')">打开产品对比</span>`;
+  }
+
+  // 香港保险
+  if (lower.includes('香港') || lower.includes('港险')) {
+    return `<b>香港保险注意事项：</b><br><br>⚖️ 法律差异：香港保单受香港法律管辖，维权需赴港<br>💱 汇率风险：美元/港币保单存在汇率波动<br>🏥 就医限制：通常需在香港指定医院确诊<br>📋 理赔流程：比内地更复杂，周期更长<br><br>优势：部分产品保费更低、分红实现率更高、美元资产配置。<br><br>💡 适合有海外资产配置需求、经常往返港深的人群。普通家庭建议优先配置内地保险。`;
+  }
+
+  // 行业数据
+  if (lower.includes('理赔') || lower.includes('治疗费用') || lower.includes('行业数据')) {
+    return `<b>行业关键数据：</b><br><br>📊 理赔率：行业平均获赔率 > 97%<br>💰 重疾治疗费用：常见重疾 30-80万<br>🏥 癌症治疗：靶向药年费 10-50万<br>📈 2025年行业保费：超5万亿<br><br>💡 理赔纠纷多因"未如实告知"，投保时务必如实填写健康告知。`;
+  }
+
+  // 香港
+  if (lower.includes('倒闭') || lower.includes('安全') || lower.includes('靠谱')) {
+    return `<b>保险公司安全性：</b><br><br>✅ 中国有保险保障基金制度<br>✅ 保险公司受银保监会严格监管<br>✅ 即使公司破产，人寿保单也会被接管<br>✅ 保险合同的法律效力不因公司变更而失效<br><br>⚠️ 但买保险还是要看产品本身，不要只看品牌大小。大公司产品不一定性价比最高。`;
+  }
+
+  // 默认回复
+  return `我可以帮你：<br><br>· 📋 <b>推荐保险</b> — 告诉我你的需求<br>· 🔍 <b>查产品</b> — 问某款产品的详情<br>· 📊 <b>算收益</b> — IRR / 回本年限<br>· 📐 <b>分析缺口</b> — 保障够不够<br>· ⚖️ <b>产品对比</b> — 2-3款产品PK<br><br>试着问我一个问题吧！`;
+}
+
+// ========== INIT ==========
+document.addEventListener('DOMContentLoaded', () => {
+  loadAllData();
+  initScrollEffects();
+});
+</script>
+</body>
+</html>

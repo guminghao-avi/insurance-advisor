@@ -224,6 +224,84 @@
         "分红型"
       ],
       "irr_reference": "有效保额每年2.5%递增，IRR约2.0-2.5%"
+    },
+    {
+      "id": "dinghaizhu-8",
+      "name": "定海柱8号",
+      "company": "国富人寿",
+      "category": "定期寿险",
+      "age_range": "18-60岁",
+      "coverage_period": "保10/20/30年/至60/65/70岁",
+      "coverage_amount": "最高350万",
+      "premium_reference": "30岁男/100万/保30年约1050元/年",
+      "key_features": [
+        "定海柱系列升级版，涨幅最小",
+        "健告仅3条不问乙肝和结节",
+        "猝死保障强",
+        "1-6类职业可投"
+      ],
+      "limitations": ["纯保障型，到期不退保费"],
+      "suitable_for": ["追求最低价格涨幅", "有乙肝/结节", "加班族"],
+      "rating": 4.6,
+      "tags": ["定期寿", "最低价", "健告宽松", "猝死"]
+    },
+    {
+      "id": "qingtianzhu-12-tairan",
+      "name": "擎天柱12号（泰然一生版）",
+      "company": "和泰人寿",
+      "category": "定期寿险",
+      "age_range": "18-60岁",
+      "coverage_period": "保20/30年/至60/65/70岁",
+      "coverage_amount": "最高350万",
+      "premium_reference": "30岁男/100万/保30年缴30年约1112元/年",
+      "key_features": [
+        "定期寿地板价，杠杆29.98倍",
+        "健告宽松",
+        "保障全面含猝死"
+      ],
+      "limitations": ["纯保障型，到期不退保费"],
+      "suitable_for": ["追求极致性价比", "花最少钱买最高保额"],
+      "rating": 4.7,
+      "tags": ["定期寿", "地板价", "高杠杆"]
+    },
+    {
+      "id": "dahaizhu-2026a",
+      "name": "华贵大麦2026A款",
+      "company": "华贵人寿",
+      "category": "定期寿险",
+      "age_range": "18-60岁",
+      "coverage_period": "保20/30年/至60/65/70岁",
+      "coverage_amount": "最高400万免体检",
+      "premium_reference": "30岁男/100万/保30年缴30年约1213元/年",
+      "key_features": [
+        "免体检保额最高400万",
+        "可附加失能关爱金",
+        "猝死额外赔最高30万",
+        "可选航空意外最高1000万"
+      ],
+      "limitations": ["比上一年涨价约7%", "纯保障型"],
+      "suitable_for": ["一线城市高负债", "需要超高保额"],
+      "rating": 4.6,
+      "tags": ["定期寿", "高保额", "失能保障", "猝死"]
+    },
+    {
+      "id": "dahaizhu-tianmijia-2026a",
+      "name": "华贵大麦甜蜜家2026A款",
+      "company": "华贵人寿",
+      "category": "定期寿险（夫妻共保）",
+      "age_range": "夫妻双方18-60岁",
+      "coverage_period": "保10/20/30年",
+      "coverage_amount": "夫妻独立保额，限时最高520万",
+      "premium_reference": "夫妻各100万约2100元/年",
+      "key_features": [
+        "一张保单保夫妻两人",
+        "同一意外身故赔付4倍保额",
+        "限时免体检保额提升至520万"
+      ],
+      "limitations": ["需夫妻同时投保", "离婚后保单处理较复杂"],
+      "suitable_for": ["夫妻共同投保", "经常共同出差"],
+      "rating": 4.5,
+      "tags": ["定期寿", "夫妻共保", "高保额", "限时"]
     }
   ]
 }

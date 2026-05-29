@@ -1,7 +1,7 @@
 {
   "project_name": "insurance-advisor",
-  "version": "2.0.0",
-  "last_updated": "2026-05-28",
+  "version": "2.1.0",
+  "last_updated": "2026-05-29",
   "description": "全险种保险产品知识库，覆盖医疗险、重疾险、意外险、寿险、理财险、香港保险",
   "data_sources": [
     "保险公司官网公开信息披露",
@@ -16,13 +16,13 @@
   },
   "disclaimer": "本知识库所有产品信息仅供参考，不构成任何购买建议。实际条款以保险公司官方为准。购买前请仔细阅读保险条款、健康告知和投保须知。",
   "product_counts": {
-    "medical": 36,
-    "critical_illness": 11,
-    "accident": 7,
-    "life": 8,
-    "investment": 6,
+    "medical": 38,
+    "critical_illness": 14,
+    "accident": 10,
+    "life": 12,
+    "investment": 8,
     "hongkong": 6,
-    "total": 74
+    "total": 88
   },
   "fudan_skills_reused": [
     "insurance-product-comparison（产品对比）",
