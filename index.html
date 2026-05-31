@@ -245,8 +245,49 @@ input, select { font-family: inherit; }
 }
 .tab-btn:hover { color: var(--text); background: rgba(0,0,0,0.03); }
 .tab-btn.active {
-  color: var(--navy); background: var(--navy);
+  background: var(--navy);
   color: var(--white); font-weight: 600;
+}
+
+/* ========== FILTER BAR ========== */
+.filter-bar {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  margin-bottom: 20px; padding: 14px 16px;
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.filter-search {
+  flex: 1; min-width: 180px;
+  padding: 8px 14px; border: 1px solid var(--border);
+  border-radius: 8px; font-size: 0.85rem;
+  outline: none; transition: var(--transition);
+}
+.filter-search:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-dim); }
+.filter-sort {
+  padding: 8px 12px; border: 1px solid var(--border);
+  border-radius: 8px; font-size: 0.85rem;
+  background: var(--white); color: var(--text);
+  outline: none; cursor: pointer;
+}
+.filter-tags {
+  display: flex; gap: 6px; flex-wrap: wrap;
+}
+.filter-tag {
+  padding: 5px 12px; border-radius: 100px;
+  font-size: 0.75rem; font-weight: 500;
+  background: var(--bg); color: var(--text-sec);
+  border: 1px solid var(--border);
+  cursor: pointer; transition: var(--transition);
+  user-select: none;
+}
+.filter-tag:hover { border-color: var(--gold-light); }
+.filter-tag.active {
+  background: var(--gold-dim); border-color: var(--gold);
+  color: var(--gold); font-weight: 600;
+}
+.filter-count {
+  font-size: 0.8rem; color: var(--text-light);
+  white-space: nowrap;
 }
 .tab-content { display: none; }
 .tab-content.active { display: block; animation: fadeIn 0.4s; }
@@ -989,6 +1030,15 @@ input, select { font-family: inherit; }
     <p>数据来自公开产品信息整理，定期更新</p>
   </div>
   <div class="tabs reveal" id="productTabs"></div>
+  <div class="filter-bar reveal" id="filterBar">
+    <input class="filter-search" id="filterSearch" placeholder="搜索产品名称、公司、标签..." oninput="applyFilters()">
+    <select class="filter-sort" id="filterSort" onchange="applyFilters()">
+      <option value="rating">评分高→低</option>
+      <option value="name">名称 A→Z</option>
+    </select>
+    <div class="filter-tags" id="filterTags"></div>
+    <span class="filter-count" id="filterCount"></span>
+  </div>
   <div id="productContent">
     <div style="text-align:center;padding:60px 0;">
       <div class="spinner"></div>
@@ -1217,26 +1267,101 @@ function renderProductTabs() {
   tabs.innerHTML = Object.entries(categoryInfo).map(([key, info]) => `
     <button class="tab-btn ${key === currentTab ? 'active' : ''}" onclick="activateTab('${key}')">${info.name}</button>
   `).join('');
-  renderProducts(currentTab);
+  renderFilters(currentTab);
+  applyFilters();
 }
+
+let activeFilters = new Set();
 
 function activateTab(key) {
   currentTab = key;
+  activeFilters.clear();
   document.querySelectorAll('.tab-btn').forEach((btn, i) => {
     btn.classList.toggle('active', Object.keys(categoryInfo)[i] === key);
   });
-  renderProducts(key);
+  renderFilters(key);
+  applyFilters();
 }
 
-function renderProducts(category) {
+// Category-specific filter tags
+const categoryFilters = {
+  'medical': ['保证续保', '0免赔', '免健告', '特需部', '少儿', '防癌'],
+  'critical-illness': ['少儿', '免健告', '多次赔付', '高危职业', '纯重疾', '大品牌'],
+  'accident': ['少儿', '老人', '免健告', '不限社保', '猝死'],
+  'life': ['定期寿', '增额寿', '夫妻共保', '分红型', '返还型'],
+  'investment': ['年金', '增额寿', '固收', '分红型', '养老社区'],
+  'hongkong': ['重疾', '储蓄', '美元保单']
+};
+
+function renderFilters(category) {
+  const tags = categoryFilters[category] || [];
+  const container = document.getElementById('filterTags');
+  container.innerHTML = tags.map(t =>
+    `<span class="filter-tag" onclick="toggleFilter(this, '${t}')">${t}</span>`
+  ).join('');
+  document.getElementById('filterSearch').value = '';
+  document.getElementById('filterSort').value = 'rating';
+}
+
+function toggleFilter(el, tag) {
+  if (activeFilters.has(tag)) {
+    activeFilters.delete(tag);
+    el.classList.remove('active');
+  } else {
+    activeFilters.add(tag);
+    el.classList.add('active');
+  }
+  applyFilters();
+}
+
+function applyFilters() {
+  const search = document.getElementById('filterSearch').value.toLowerCase().trim();
+  const sort = document.getElementById('filterSort').value;
+  let products = [...(allProducts[currentTab] || [])];
+
+  // Filter by search
+  if (search) {
+    products = products.filter(p => {
+      const text = [p.name, p.company, p.category, ...(p.tags || []), ...(p.key_features || []), ...(p.suitable_for || [])].join(' ').toLowerCase();
+      return text.includes(search);
+    });
+  }
+
+  // Filter by tags
+  if (activeFilters.size > 0) {
+    products = products.filter(p => {
+      const pTags = (p.tags || []).map(t => t.toLowerCase());
+      const pFeatures = (p.key_features || []).join(' ').toLowerCase();
+      const pText = [...pTags, pFeatures].join(' ');
+      return Array.from(activeFilters).every(f => pText.includes(f.toLowerCase()));
+    });
+  }
+
+  // Sort
+  if (sort === 'rating') {
+    products.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+  } else if (sort === 'name') {
+    products.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+  }
+
+  // Update count
+  const total = (allProducts[currentTab] || []).length;
+  const shown = products.length;
+  document.getElementById('filterCount').textContent = shown === total ? `${total}款` : `${shown}/${total}款`;
+
+  renderProducts(products);
+}
+
+function renderProducts(products) {
   const container = document.getElementById('productContent');
-  const products = allProducts[category] || [];
   if (!products.length) {
-    container.innerHTML = '<p style="text-align:center;color:var(--text-sec);padding:40px;">暂无产品数据</p>';
+    container.innerHTML = '<p style="text-align:center;color:var(--text-sec);padding:40px;">没有匹配的产品，试试调整筛选条件</p>';
     return;
   }
-  container.innerHTML = `<div class="product-grid">${products.map((p, i) => `
-    <div class="prod-card" onclick="showDetail('${category}', ${i})" style="cursor:pointer;">
+  container.innerHTML = `<div class="product-grid">${products.map((p, i) => {
+    const realIdx = (allProducts[currentTab] || []).indexOf(p);
+    return `
+    <div class="prod-card" onclick="showDetail('${currentTab}', ${realIdx})" style="cursor:pointer;">
       <div class="prod-header">
         <div>
           <div class="prod-name">${p.name}</div>
